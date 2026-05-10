@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta name="theme-color" content="#0F0F0F"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="CasaLimpa"/>
+<title>CasaLimpa</title>
+<script>
+const manifestData={name:"CasaLimpa",short_name:"CasaLimpa",description:"Organização da faxina doméstica",start_url:".",display:"standalone",background_color:"#0F0F0F",theme_color:"#0F0F0F",icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F0F0F'/><text y='.9em' font-size='80' x='10'>🧹</text></svg>",sizes:"512x512",type:"image/svg+xml"}]};
+const blob=new Blob([JSON.stringify(manifestData)],{type:"application/json"});
+const link=document.createElement("link");link.rel="manifest";link.href=URL.createObjectURL(blob);document.head.appendChild(link);
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:#0F0F0F;color:#F0EDE4;font-family:Georgia,'Times New Roman',serif;min-height:100vh;overflow-x:hidden;}
+button,input,select{font-family:Georgia,'Times New Roman',serif;cursor:pointer;}
+#bg{position:fixed;inset:0;background:radial-gradient(circle at 20% 20%,rgba(232,197,71,.06) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(71,201,201,.06) 0%,transparent 50%);pointer-events:none;z-index:0;}
+#loading{position:fixed;inset:0;background:#0F0F0F;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:200;}
+#login-wrap{position:relative;z-index:1;display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;}
+.login-logo{font-size:56px;margin-bottom:8px;}
+.login-title{font-size:28px;font-weight:bold;margin-bottom:4px;}
+.login-sub{color:#888;font-size:14px;margin-bottom:32px;}
+.login-btns{display:flex;flex-direction:column;gap:12px;width:100%;max-width:340px;}
+.login-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:20px;border-radius:16px;border:none;transition:transform .15s;}
+.btn-admin{background:#E8C547;color:#0F0F0F;}
+.btn-executor{background:#1A1A1A;border:1px solid #333!important;color:#F0EDE4;}
+.login-btn-label{font-size:16px;font-weight:bol
