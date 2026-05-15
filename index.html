@@ -127,6 +127,7 @@ h1,h2,h3,.display{font-family:'Playfair Display',serif;}
 .ckm{color:#fff;font-size:11px;font-weight:700;}
 .tn{font-size:13px;flex:1;color:var(--text);}
 .ti.done .tn{text-decoration:line-through;color:var(--text3);}
+.tdesc{display:block;font-size:11px;color:var(--text3);margin-top:2px;line-height:1.4;font-style:italic;}
 .del-btn{background:transparent;border:none;color:var(--text3);font-size:18px;padding:0 2px;line-height:1;}
 
 /* ── EMPTY ── */
@@ -269,6 +270,10 @@ h1,h2,h3,.display{font-family:'Playfair Display',serif;}
       <label class="form-lbl">Dias da semana</label>
       <div class="days-grid" id="tf-days"></div>
     </div>
+    <div class="form-group">
+      <label class="form-lbl">Descrição <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label>
+      <textarea class="form-inp" id="tf-desc" placeholder="Ex: Usar o pano amarelo, não esquecer atrás do fogão…" rows="4" style="resize:none;line-height:1.5"></textarea>
+    </div>
   </div>
 </div>
 
@@ -379,20 +384,22 @@ async function delTask(tid){
 }
 
 function goAddTask(){
-  taskFormMode="add";taskFormData={id:null,name:"",roomId:"",days:[]};
+  taskFormMode="add";taskFormData={id:null,name:"",roomId:"",days:[],description:""};
   backScreen="screen-main";
   document.getElementById("task-form-title").textContent="Nova Tarefa";
   document.getElementById("tf-name").value="";
+  document.getElementById("tf-desc").value="";
   const sel=document.getElementById("tf-room");
   sel.innerHTML=`<option value="">Selecione o cômodo</option>`+rooms.map(r=>`<option value="${r.id}">${r.icon} ${r.name}</option>`).join("");
   renderTfDays();showScreen("screen-task");
   setTimeout(()=>document.getElementById("tf-name").focus(),200);
 }
 function goAddTaskRoom(rid){
-  taskFormMode="add";taskFormData={id:null,name:"",roomId:rid,days:[]};
+  taskFormMode="add";taskFormData={id:null,name:"",roomId:rid,days:[],description:""};
   backScreen="screen-room-detail";
   document.getElementById("task-form-title").textContent="Nova Tarefa";
   document.getElementById("tf-name").value="";
+  document.getElementById("tf-desc").value="";
   const sel=document.getElementById("tf-room");
   sel.innerHTML=`<option value="">Selecione o cômodo</option>`+rooms.map(r=>`<option value="${r.id}">${r.icon} ${r.name}</option>`).join("");
   sel.value=rid;
@@ -411,9 +418,10 @@ function toggleTfDay(i){
 async function saveTask(){
   const name=document.getElementById("tf-name").value.trim();
   const roomId=document.getElementById("tf-room").value;
+  const description=document.getElementById("tf-desc").value.trim();
   if(!name||!roomId||!taskFormData.days.length){alert("Preencha nome, cômodo e pelo menos um dia.");return;}
-  if(taskFormMode==="add"){await sb("tasks",{method:"POST",body:JSON.stringify({id:"t"+Date.now(),room_id:roomId,name,days:taskFormData.days})});}
-  else{await sb(`tasks?id=eq.${taskFormData.id}`,{method:"PATCH",body:JSON.stringify({name,room_id:roomId,days:taskFormData.days})});}
+  if(taskFormMode==="add"){await sb("tasks",{method:"POST",body:JSON.stringify({id:"t"+Date.now(),room_id:roomId,name,days:taskFormData.days,description})});}
+  else{await sb(`tasks?id=eq.${taskFormData.id}`,{method:"PATCH",body:JSON.stringify({name,room_id:roomId,days:taskFormData.days,description})});}
   await loadAll();goBack();renderMain();
 }
 
@@ -493,7 +501,7 @@ function renderRoomDetail(){
     h+=`<div class="wdb"><div class="wdl">${dn}${di===TDI?`<span class="today-tag">hoje</span>`:""}</div>`;
     dt.forEach(t=>{
       const done=!!smap[`${t.id}_${di}`];
-      h+=`<div class="ti${done?" done":""}" onclick="toggleTask('${t.id}',${di})"><div class="chk${done?" checked":""}" style="${done?`background:${rm.color};border-color:${rm.color}`:""}"> ${done?`<span class="ckm">✓</span>`:""}</div><span class="tn">${t.name}</span>${ia?`<button class="del-btn" onclick="event.stopPropagation();delTask('${t.id}')">×</button>`:""}</div>`;
+      h+=`<div class="ti${done?" done":""}" onclick="toggleTask('${t.id}',${di})"><div class="chk${done?" checked":""}" style="${done?`background:${rm.color};border-color:${rm.color}`:""}"> ${done?`<span class="ckm">✓</span>`:""}</div><div style="flex:1;min-width:0"><span class="tn">${t.name}</span>${t.description?`<span class="tdesc">${t.description}</span>`:""}</div>${ia?`<button class="del-btn" onclick="event.stopPropagation();delTask('${t.id}')">×</button>`:""}</div>`;
     });
     h+=`</div>`;
   });
@@ -531,7 +539,7 @@ function renderDay(ia){
     h+=`<div class="rc"><div class="rch" style="border-left-color:${rm.color}"><span class="rci">${rm.icon}</span><span class="rcn">${rm.name}</span><span class="rbadge" style="background:${rm.color}18;color:${rm.color}">${dn}/${dt.length}</span></div><div class="tlist">`;
     dt.forEach(t=>{
       const done=!!smap[`${t.id}_${selDay}`];
-      h+=`<div class="ti${done?" done":""}" onclick="toggleTask('${t.id}',${selDay})"><div class="chk${done?" checked":""}" style="${done?`background:${rm.color};border-color:${rm.color}`:""}"> ${done?`<span class="ckm">✓</span>`:""}</div><span class="tn">${t.name}</span>${ia?`<button class="del-btn" onclick="event.stopPropagation();delTask('${t.id}')">×</button>`:""}</div>`;
+      h+=`<div class="ti${done?" done":""}" onclick="toggleTask('${t.id}',${selDay})"><div class="chk${done?" checked":""}" style="${done?`background:${rm.color};border-color:${rm.color}`:""}"> ${done?`<span class="ckm">✓</span>`:""}</div><div style="flex:1;min-width:0"><span class="tn">${t.name}</span>${t.description?`<span class="tdesc">${t.description}</span>`:""}</div>${ia?`<button class="del-btn" onclick="event.stopPropagation();delTask('${t.id}')">×</button>`:""}</div>`;
     });
     h+=`</div></div>`;
   });
