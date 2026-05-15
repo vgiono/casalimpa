@@ -3,187 +3,234 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
-<meta name="theme-color" content="#0F0F0F"/>
+<meta name="theme-color" content="#FAF8F4"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <meta name="apple-mobile-web-app-title" content="CasaLimpa"/>
 <title>CasaLimpa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
 <script>
-const md={name:"CasaLimpa",short_name:"CasaLimpa",start_url:".",display:"standalone",background_color:"#0F0F0F",theme_color:"#0F0F0F",icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230F0F0F'/><text y='.9em' font-size='80' x='10'>🧹</text></svg>",sizes:"512x512",type:"image/svg+xml"}]};
+const md={name:"CasaLimpa",short_name:"CasaLimpa",start_url:".",display:"standalone",background_color:"#FAF8F4",theme_color:"#FAF8F4",icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FAF8F4'/><text y='.9em' font-size='80' x='10'>🧹</text></svg>",sizes:"512x512",type:"image/svg+xml"}]};
 const bl=new Blob([JSON.stringify(md)],{type:"application/json"});
 const lk=document.createElement("link");lk.rel="manifest";lk.href=URL.createObjectURL(bl);document.head.appendChild(lk);
 </script>
 <style>
+:root{
+  --bg:#FAF8F4;
+  --bg2:#F3F0EA;
+  --bg3:#EAE5DC;
+  --text:#2C2416;
+  --text2:#7A6E60;
+  --text3:#B5A898;
+  --accent:#5C7A5C;    /* verde sálvia */
+  --accent2:#C4683A;   /* terracota */
+  --accent3:#8B6914;   /* âmbar */
+  --border:#DDD8CE;
+  --border2:#EAE5DC;
+  --card:#FFFFFF;
+  --shadow:0 1px 4px rgba(44,36,22,.08);
+  --shadow2:0 4px 20px rgba(44,36,22,.12);
+  --radius:14px;
+  --radius-sm:8px;
+}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-body{background:#0F0F0F;color:#F0EDE4;font-family:Georgia,'Times New Roman',serif;min-height:100vh;overflow-x:hidden;}
-button,input,select,textarea{font-family:inherit;cursor:pointer;}
-#bg{position:fixed;inset:0;background:radial-gradient(circle at 20% 20%,rgba(232,197,71,.06) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(71,201,201,.06) 0%,transparent 50%);pointer-events:none;z-index:0;}
+body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;min-height:100vh;overflow-x:hidden;}
+button,input,select{font-family:'Lato',sans-serif;cursor:pointer;}
+h1,h2,h3,.display{font-family:'Playfair Display',serif;}
 
 /* Loading */
-#loading{position:fixed;inset:0;background:#0F0F0F;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:200;}
+#loading{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:200;}
+.loading-logo{font-size:48px;}
+.loading-txt{color:var(--text3);font-size:13px;letter-spacing:2px;text-transform:uppercase;}
 
-/* Login */
-#login-screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;position:relative;z-index:1;}
-.lg-logo{font-size:56px;margin-bottom:8px;}
-.lg-title{font-size:28px;font-weight:bold;margin-bottom:4px;}
-.lg-sub{color:#888;font-size:14px;margin-bottom:32px;}
-.lg-btns{display:flex;flex-direction:column;gap:12px;width:100%;max-width:340px;}
-.lg-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:20px;border-radius:16px;border:none;}
-.lg-btn-a{background:#E8C547;color:#0F0F0F;}
-.lg-btn-e{background:#1A1A1A;border:1px solid #333!important;color:#F0EDE4;}
-.lg-btn-lbl{font-size:16px;font-weight:bold;}
-.lg-btn-sub{font-size:12px;opacity:.7;}
-.pin-wrap{width:100%;max-width:340px;display:none;}
-.pin-lbl{color:#AAA;font-size:14px;margin-bottom:12px;text-align:center;}
-.pin-inp{width:100%;background:#111;border:1px solid #2A2A2A;border-radius:12px;color:#F0EDE4;padding:14px;font-size:20px;text-align:center;letter-spacing:8px;margin-bottom:8px;}
-.pin-inp.err{border-color:#E84747;}
-.pin-err{display:none;color:#E84747;font-size:12px;text-align:center;margin-bottom:8px;}
-.pin-hint{color:#444;font-size:11px;text-align:center;margin-top:12px;}
+/* ── LOGIN ── */
+#login-screen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 28px;background:var(--bg);position:relative;z-index:1;}
+.lg-brand{text-align:center;margin-bottom:48px;}
+.lg-logo{font-size:52px;margin-bottom:12px;}
+.lg-title{font-family:'Playfair Display',serif;font-size:32px;color:var(--text);margin-bottom:4px;}
+.lg-sub{color:var(--text3);font-size:13px;letter-spacing:1.5px;text-transform:uppercase;}
+.lg-btns{display:flex;flex-direction:column;gap:12px;width:100%;max-width:320px;}
+.lg-btn{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:var(--radius);border:1.5px solid var(--border);background:var(--card);text-align:left;box-shadow:var(--shadow);}
+.lg-btn-icon{font-size:28px;flex-shrink:0;}
+.lg-btn-text{}
+.lg-btn-lbl{font-size:15px;font-weight:700;color:var(--text);display:block;}
+.lg-btn-sub{font-size:12px;color:var(--text3);display:block;margin-top:2px;}
+.lg-btn-a{border-color:var(--accent);background:#F0F5F0;}
+.lg-btn-i{border-color:var(--accent2);background:#FBF3EE;}
+.pin-section{width:100%;max-width:320px;display:none;margin-top:8px;}
+.pin-lbl{color:var(--text2);font-size:13px;margin-bottom:10px;text-align:center;}
+.pin-inp{width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);color:var(--text);padding:14px;font-size:22px;text-align:center;letter-spacing:10px;outline:none;}
+.pin-inp:focus{border-color:var(--accent);}
+.pin-inp.err{border-color:var(--accent2);}
+.pin-err{display:none;color:var(--accent2);font-size:12px;text-align:center;margin-top:6px;}
+.pin-hint{color:var(--text3);font-size:11px;text-align:center;margin-top:10px;}
+.pin-actions{display:flex;gap:10px;margin-top:14px;}
 
-/* Screens */
-.screen{display:none;flex-direction:column;min-height:100vh;position:relative;z-index:1;}
+/* ── SCREENS ── */
+.screen{display:none;flex-direction:column;min-height:100vh;background:var(--bg);}
 .screen.active{display:flex;}
 
-/* Top bar (shared) */
-.topbar{display:flex;justify-content:space-between;align-items:flex-start;padding:14px 18px 10px;border-bottom:1px solid #2A2A2A;flex-shrink:0;}
-.tb-left{display:flex;align-items:center;gap:10px;}
-.tb-logo{font-size:26px;}
-.tb-title{font-size:18px;font-weight:bold;letter-spacing:-.5px;}
-.tb-sub{font-size:10px;color:#888;letter-spacing:2px;text-transform:uppercase;margin-top:2px;}
-.tb-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;}
-.today-badge{background:#1A1A1A;border:1px solid #333;border-radius:20px;padding:4px 9px;font-size:11px;color:#AAA;}
-.tb-meta{display:flex;align-items:center;gap:7px;margin-top:2px;}
-.role-pill{border-radius:20px;padding:2px 9px;font-size:11px;font-weight:bold;}
-.ra{background:rgba(232,197,71,.13);color:#E8C547;}
-.re{background:rgba(71,201,201,.13);color:#47C9C9;}
-.sync-dot{color:#E8C547;font-size:13px;display:none;}
-.logout-btn{background:transparent;border:1px solid #2A2A2A;border-radius:8px;color:#666;font-size:11px;padding:3px 7px;}
+/* ── TOPBAR ── */
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 12px;border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0;}
+.tb-brand{display:flex;align-items:center;gap:10px;}
+.tb-logo{font-size:24px;}
+.tb-name{font-family:'Playfair Display',serif;font-size:20px;color:var(--text);}
+.tb-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.today-badge{font-size:11px;color:var(--text2);letter-spacing:.3px;}
+.tb-meta{display:flex;align-items:center;gap:8px;}
+.role-pill{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:20px;}
+.rp-a{background:#E8F0E8;color:var(--accent);}
+.rp-i{background:#FAEEE8;color:var(--accent2);}
+.sync-dot{font-size:12px;color:var(--accent3);display:none;}
+.logout-btn{background:transparent;border:1px solid var(--border);border-radius:6px;color:var(--text3);font-size:11px;padding:3px 8px;}
 
-/* Tabs */
-.tabs{display:flex;gap:4px;padding:9px 18px;border-bottom:1px solid #1A1A1A;overflow-x:auto;flex-shrink:0;}
-.tab{background:transparent;border:1px solid #2A2A2A;border-radius:20px;color:#666;padding:5px 12px;font-size:12px;white-space:nowrap;}
-.tab.active{background:#E8C547;border-color:#E8C547;color:#0F0F0F;font-weight:bold;}
+/* ── TABS ── */
+.tabs{display:flex;padding:0 20px;border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0;gap:0;}
+.tab{background:transparent;border:none;border-bottom:2px solid transparent;color:var(--text3);padding:10px 14px;font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;white-space:nowrap;}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
 
-/* Scroll content */
-.scroller{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:13px 18px 100px;max-width:700px;width:100%;margin:0 auto;}
+/* ── SCROLLER ── */
+.scroller{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 20px 100px;}
 
-/* Day view */
-.day-bar{display:flex;gap:5px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px;}
-.day-btn{position:relative;background:#1A1A1A;border:1px solid #2A2A2A;border-radius:10px;color:#888;padding:8px 9px;min-width:48px;text-align:center;overflow:hidden;flex-shrink:0;}
-.day-btn.active{border-color:#E8C547;color:#E8C547;}
-.day-btn.today{background:#1E1C10;}
-.day-lbl{display:block;font-size:12px;font-weight:bold;}
-.day-cnt{display:block;font-size:10px;color:#555;margin-top:2px;}
-.day-prog{position:absolute;bottom:0;left:0;height:3px;background:#E8C547;}
-.prog-sec{margin-bottom:16px;}
-.prog-hdr{display:flex;justify-content:space-between;margin-bottom:7px;}
-.prog-lbl{font-size:16px;font-weight:bold;}
-.prog-pct{font-size:13px;color:#888;}
-.prog-track{height:5px;background:#1A1A1A;border-radius:3px;overflow:hidden;}
-.prog-fill{height:100%;border-radius:3px;transition:width .4s,background .4s;}
+/* ── DAY BAR ── */
+.day-bar{display:flex;gap:6px;margin-bottom:20px;overflow-x:auto;padding-bottom:4px;}
+.day-btn{position:relative;background:var(--card);border:1.5px solid var(--border);border-radius:10px;color:var(--text3);padding:9px 8px;min-width:46px;text-align:center;overflow:hidden;flex-shrink:0;box-shadow:var(--shadow);}
+.day-btn.active{border-color:var(--accent);color:var(--accent);background:#F0F5F0;}
+.day-btn.today{background:#FFFBF0;}
+.day-lbl{display:block;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.day-cnt{display:block;font-size:10px;margin-top:2px;}
+.day-prog{position:absolute;bottom:0;left:0;height:2px;background:var(--accent);}
 
-/* Room card */
-.rc{background:#141414;border:1px solid #222;border-radius:12px;margin-bottom:9px;overflow:hidden;}
-.rch{display:flex;align-items:center;gap:9px;padding:10px 13px;border-left:3px solid;background:#1A1A1A;}
-.rci{font-size:16px;} .rcn{font-weight:bold;flex:1;font-size:13px;}
-.rbadge{border-radius:20px;padding:2px 8px;font-size:11px;font-weight:bold;}
-.tlist{padding:5px 9px;}
-.ti{display:flex;align-items:center;gap:10px;padding:9px 3px;border-bottom:1px solid #1E1E1E;cursor:pointer;user-select:none;}
-.ti.done{opacity:.5;}
-.chk{width:20px;height:20px;border-radius:5px;border:2px solid #333;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+/* ── PROGRESS ── */
+.prog-sec{margin-bottom:20px;}
+.prog-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.prog-lbl{font-family:'Playfair Display',serif;font-size:20px;}
+.prog-pct{font-size:12px;color:var(--text3);font-weight:700;letter-spacing:.5px;}
+.prog-track{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:2px;transition:width .5s,background .5s;}
+
+/* ── ROOM CARD ── */
+.rc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);}
+.rch{display:flex;align-items:center;gap:10px;padding:12px 16px;border-left:3px solid;}
+.rci{font-size:18px;}
+.rcn{font-weight:700;flex:1;font-size:14px;color:var(--text);}
+.rbadge{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;}
+.tlist{padding:4px 12px;}
+.ti{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid var(--border2);cursor:pointer;user-select:none;}
+.ti:last-child{border-bottom:none;}
+.ti.done{opacity:.45;}
+.chk{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;}
 .chk.checked{border-color:transparent;}
-.ckm{color:#0F0F0F;font-size:11px;font-weight:bold;}
-.tn{font-size:13px;flex:1;}
-.del-btn{background:transparent;border:none;color:#444;font-size:18px;padding:0 3px;line-height:1;}
+.ckm{color:#fff;font-size:11px;font-weight:700;}
+.tn{font-size:13px;flex:1;color:var(--text);}
+.ti.done .tn{text-decoration:line-through;color:var(--text3);}
+.del-btn{background:transparent;border:none;color:var(--text3);font-size:18px;padding:0 2px;line-height:1;}
 
-/* Empty */
-.empty{text-align:center;padding:46px 18px;}
-.empty-ic{font-size:42px;margin-bottom:9px;}
-.empty-tx{color:#666;font-size:13px;}
+/* ── EMPTY ── */
+.empty{text-align:center;padding:60px 20px;}
+.empty-ic{font-size:44px;margin-bottom:12px;}
+.empty-tx{color:var(--text3);font-size:14px;line-height:1.6;}
 
-/* Room grid */
-.room-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;}
-.room-tile{background:#141414;border:1px solid #222;border-top:3px solid;border-radius:12px;padding:9px 13px 13px;cursor:pointer;position:relative;}
-.rta{position:absolute;top:6px;right:6px;display:flex;gap:2px;}
-.rta-btn{background:rgba(15,15,15,.7);border:none;border-radius:6px;font-size:12px;padding:3px 5px;}
-.rti{font-size:24px;margin:5px 0;}
-.rtn{font-weight:bold;font-size:13px;margin-bottom:5px;}
-.rts{display:flex;justify-content:space-between;font-size:11px;color:#666;}
-.add-tile{background:#141414;border:1px dashed #333;border-radius:12px;padding:18px 13px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
-.add-tile-ic{font-size:24px;color:#444;}
-.add-tile-lbl{color:#555;font-size:12px;}
+/* ── ROOM GRID ── */
+.room-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.room-tile{background:var(--card);border:1px solid var(--border);border-top:3px solid;border-radius:var(--radius);padding:14px;cursor:pointer;position:relative;box-shadow:var(--shadow);}
+.rta{position:absolute;top:8px;right:8px;}
+.rta-btn{background:var(--bg2);border:none;border-radius:6px;font-size:13px;padding:3px 6px;color:var(--text2);}
+.rti{font-size:26px;margin:6px 0 8px;}
+.rtn{font-weight:700;font-size:14px;margin-bottom:5px;color:var(--text);}
+.rts{display:flex;justify-content:space-between;font-size:11px;color:var(--text3);}
+.add-tile{background:var(--bg2);border:1.5px dashed var(--border);border-radius:var(--radius);padding:20px 14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.add-tile-ic{font-size:26px;color:var(--text3);}
+.add-tile-lbl{color:var(--text3);font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
 
-/* Room detail */
-.rdh{display:flex;align-items:center;gap:10px;padding:12px;border-radius:12px;margin-bottom:12px;}
-.rdhic{font-size:28px;} .rdhtl{font-size:18px;font-weight:bold;}
-.wdb{margin-bottom:16px;}
-.wdl{font-size:12px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
-.today-tag{background:#E8C547;color:#0F0F0F;border-radius:10px;padding:1px 6px;font-size:9px;font-weight:bold;text-transform:uppercase;}
+/* ── ROOM DETAIL ── */
+.rdh{display:flex;align-items:center;gap:12px;padding:14px 16px;border-radius:var(--radius);margin-bottom:14px;border-left:4px solid;}
+.rdhic{font-size:30px;}
+.rdhtl{font-family:'Playfair Display',serif;font-size:20px;}
+.wdb{margin-bottom:18px;}
+.wdl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.today-tag{background:var(--accent3);color:#fff;border-radius:20px;padding:1px 7px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;}
 
-/* Week */
-.week-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
-.wc{background:#141414;border:1px solid #222;border-radius:12px;padding:12px;cursor:pointer;}
-.wc.today{border-color:rgba(232,197,71,.27);background:#1A1A10;}
-.wcd{font-weight:bold;font-size:13px;margin-bottom:3px;display:flex;align-items:center;gap:4px;}
-.tdot{color:#E8C547;font-size:9px;}
-.wcc{font-size:11px;color:#666;margin-bottom:6px;}
-.wbt{height:4px;background:#222;border-radius:2px;overflow:hidden;margin-bottom:3px;}
+/* ── WEEK ── */
+.week-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.wc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;cursor:pointer;box-shadow:var(--shadow);}
+.wc.today{border-color:var(--accent3);background:#FFFBF0;}
+.wcd{font-weight:700;font-size:13px;margin-bottom:4px;display:flex;align-items:center;gap:6px;}
+.tdot{color:var(--accent3);font-size:9px;}
+.wcc{font-size:11px;color:var(--text3);margin-bottom:8px;}
+.wbt{height:3px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-bottom:4px;}
 .wbf{height:100%;border-radius:2px;}
-.wcr{font-size:11px;color:#888;margin-bottom:6px;}
+.wcr{font-size:11px;color:var(--text2);font-weight:700;margin-bottom:6px;}
 .wri{font-size:14px;display:flex;gap:3px;flex-wrap:wrap;}
 
-/* FAB */
-.fab{position:fixed;bottom:24px;right:20px;width:52px;height:52px;border-radius:50%;background:#E8C547;border:none;color:#0F0F0F;font-size:26px;box-shadow:0 4px 20px rgba(232,197,71,.25);z-index:10;display:flex;align-items:center;justify-content:center;}
+/* ── FAB ── */
+.fab{position:fixed;bottom:28px;right:22px;width:54px;height:54px;border-radius:50%;background:var(--accent);border:none;color:#fff;font-size:26px;box-shadow:0 4px 16px rgba(92,122,92,.4);z-index:10;display:flex;align-items:center;justify-content:center;}
 
-/* ── FORM SCREEN ── */
-.form-topbar{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #2A2A2A;flex-shrink:0;}
-.form-back{background:transparent;border:none;color:#E8C547;font-size:22px;padding:0;line-height:1;}
-.form-screen-title{font-size:17px;font-weight:bold;flex:1;}
-.form-save-btn{background:#E8C547;border:none;border-radius:10px;color:#0F0F0F;font-size:13px;font-weight:bold;padding:8px 18px;}
-.form-del-btn{background:#E84747;border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:bold;padding:8px 18px;}
-.form-scroller{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 18px 60px;}
-.form-group{margin-bottom:20px;}
-.form-label{display:block;color:#888;font-size:12px;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;}
-.form-input{width:100%;background:#141414;border:1px solid #2A2A2A;border-radius:12px;color:#F0EDE4;padding:13px 14px;font-size:15px;outline:none;}
-.form-input:focus{border-color:#E8C547;}
-.form-select{width:100%;background:#141414;border:1px solid #2A2A2A;border-radius:12px;color:#F0EDE4;padding:13px 14px;font-size:15px;outline:none;appearance:none;}
+/* ── FORM SCREENS ── */
+.form-topbar{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);background:var(--bg);flex-shrink:0;}
+.form-back{background:transparent;border:none;color:var(--accent);font-size:22px;padding:0;line-height:1;}
+.form-title{font-family:'Playfair Display',serif;font-size:18px;flex:1;color:var(--text);}
+.save-btn{background:var(--accent);border:none;border-radius:var(--radius-sm);color:#fff;font-size:13px;font-weight:700;padding:9px 18px;letter-spacing:.3px;}
+
+.form-scroller{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 20px 80px;}
+.form-group{margin-bottom:24px;}
+.form-lbl{display:block;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:8px;}
+.form-inp{width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);color:var(--text);padding:13px 16px;font-size:15px;outline:none;}
+.form-inp:focus{border-color:var(--accent);}
+.form-sel{width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);color:var(--text);padding:13px 16px;font-size:15px;outline:none;appearance:none;}
+.form-sel:focus{border-color:var(--accent);}
+
 .days-grid{display:flex;gap:8px;flex-wrap:wrap;}
-.day-toggle{background:#141414;border:1px solid #2A2A2A;border-radius:10px;color:#666;padding:10px 12px;font-size:13px;min-width:48px;text-align:center;}
-.day-toggle.on{background:#E8C547;border-color:#E8C547;color:#0F0F0F;font-weight:bold;}
-.icon-grid{display:flex;gap:8px;flex-wrap:wrap;}
-.icon-pick{background:#141414;border:1px solid #222;border-radius:10px;font-size:22px;padding:8px 10px;}
-.icon-pick.on{border-width:2px;}
-.color-grid{display:flex;gap:8px;flex-wrap:wrap;}
-.color-pick{width:34px;height:34px;border-radius:50%;border:2px solid transparent;display:flex;align-items:center;justify-content:center;}
-.color-pick.on{border-color:#F0EDE4;transform:scale(1.15);}
-.cck{color:#0F0F0F;font-size:13px;font-weight:bold;}
-.prev-card{display:flex;align-items:center;gap:10px;background:#141414;border-radius:12px;padding:14px;border-top:3px solid;border-left:3px solid;margin-top:4px;}
-.prev-name{font-weight:bold;font-size:15px;}
-.danger-zone{margin-top:12px;padding-top:20px;border-top:1px solid #1E1E1E;}
-.danger-btn{width:100%;background:transparent;border:1px solid #E84747;border-radius:12px;color:#E84747;padding:13px;font-size:14px;}
-.ma{display:flex;gap:8px;}
-.can-btn{flex:1;background:#141414;border:1px solid #2A2A2A;border-radius:10px;color:#888;padding:12px;font-size:13px;}
-.ok-btn{flex:1;background:#E8C547;border:none;border-radius:10px;color:#0F0F0F;padding:12px;font-size:13px;font-weight:bold;}
-.del-ok-btn{flex:1;background:#E84747;border:none;border-radius:10px;color:#fff;padding:12px;font-size:13px;font-weight:bold;}
+.day-tog{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text3);padding:10px 11px;font-size:12px;font-weight:700;min-width:46px;text-align:center;letter-spacing:.3px;}
+.day-tog.on{background:var(--accent);border-color:var(--accent);color:#fff;}
 
-/* Confirm delete inline */
-.confirm-box{background:#1A0A0A;border:1px solid #E8474744;border-radius:12px;padding:16px;margin-top:12px;display:none;}
+.icon-grid{display:flex;gap:8px;flex-wrap:wrap;}
+.icon-pick{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-sm);font-size:22px;padding:8px 10px;}
+.icon-pick.on{border-width:2px;}
+
+.color-grid{display:flex;gap:8px;flex-wrap:wrap;}
+.color-pick{width:34px;height:34px;border-radius:50%;border:2.5px solid transparent;display:flex;align-items:center;justify-content:center;}
+.color-pick.on{outline:2px solid var(--text);outline-offset:2px;}
+.cck{color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 2px rgba(0,0,0,.3);}
+
+.prev-card{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:var(--radius);padding:14px 16px;border-left:4px solid var(--accent);box-shadow:var(--shadow);}
+.prev-nm{font-weight:700;font-size:15px;}
+
+.danger-zone{margin-top:8px;padding-top:24px;border-top:1px solid var(--border2);}
+.danger-btn{width:100%;background:transparent;border:1.5px solid #E07060;border-radius:var(--radius);color:#C04030;padding:13px;font-size:14px;font-weight:700;}
+.confirm-box{background:#FEF5F5;border:1px solid #F0C0B8;border-radius:var(--radius);padding:16px;margin-top:12px;display:none;}
 .confirm-box.show{display:block;}
-.confirm-txt{color:#AAA;font-size:13px;text-align:center;margin-bottom:14px;line-height:1.5;}
+.confirm-txt{color:#7A3020;font-size:13px;text-align:center;margin-bottom:14px;line-height:1.6;}
+
+/* ── BUTTONS ── */
+.btn-row{display:flex;gap:10px;}
+.btn-ghost{flex:1;background:var(--bg2);border:1.5px solid var(--border);border-radius:var(--radius);color:var(--text2);padding:12px;font-size:13px;font-weight:700;}
+.btn-primary{flex:1;background:var(--accent);border:none;border-radius:var(--radius);color:#fff;padding:12px;font-size:13px;font-weight:700;}
+.btn-danger{flex:1;background:#C04030;border:none;border-radius:var(--radius);color:#fff;padding:12px;font-size:13px;font-weight:700;}
+
+/* ── ADD TASK BTN ── */
+.add-task-btn{width:100%;background:var(--bg2);border:1.5px dashed var(--border);border-radius:var(--radius);color:var(--accent);padding:13px;font-size:13px;font-weight:700;margin-top:10px;letter-spacing:.3px;}
 </style>
 </head>
 <body>
-<div id="bg"></div>
-<div id="loading"><div style="font-size:40px">🧹</div><div style="color:#888;font-size:14px">Carregando...</div></div>
 
-<!-- LOGIN -->
+<div id="loading">
+  <div class="loading-logo">🧹</div>
+  <div class="loading-txt">Carregando</div>
+</div>
+
 <div id="login-screen"></div>
 
-<!-- MAIN APP -->
+<!-- MAIN -->
 <div class="screen" id="screen-main">
   <div class="topbar">
-    <div class="tb-left"><div class="tb-logo">🧹</div><div><div class="tb-title">CasaLimpa</div><div class="tb-sub">Organização da faxina</div></div></div>
+    <div class="tb-brand">
+      <div class="tb-logo">🧹</div>
+      <div class="tb-name">CasaLimpa</div>
+    </div>
     <div class="tb-right">
       <div class="today-badge" id="today-badge"></div>
       <div class="tb-meta">
@@ -194,83 +241,83 @@ button,input,select,textarea{font-family:inherit;cursor:pointer;}
     </div>
   </div>
   <div class="tabs">
-    <button class="tab active" id="tab-day" onclick="sv('day')">📅 Por Dia</button>
-    <button class="tab" id="tab-room" onclick="sv('room')">🏠 Por Cômodo</button>
-    <button class="tab" id="tab-week" onclick="sv('week')">📊 Semana</button>
+    <button class="tab active" id="tab-day" onclick="sv('day')">Por Dia</button>
+    <button class="tab" id="tab-room" onclick="sv('room')">Cômodos</button>
+    <button class="tab" id="tab-week" onclick="sv('week')">Semana</button>
   </div>
   <div class="scroller" id="main-content"></div>
   <button class="fab" id="fab-btn" onclick="goAddTask()" style="display:none">+</button>
 </div>
 
-<!-- FORM: NOVA / EDITAR TAREFA -->
+<!-- TASK FORM -->
 <div class="screen" id="screen-task">
   <div class="form-topbar">
     <button class="form-back" onclick="goBack()">←</button>
-    <span class="form-screen-title" id="task-form-title">Nova Tarefa</span>
-    <button class="form-save-btn" onclick="saveTask()">Salvar</button>
+    <span class="form-title" id="task-form-title">Nova Tarefa</span>
+    <button class="save-btn" onclick="saveTask()">Salvar</button>
   </div>
   <div class="form-scroller">
     <div class="form-group">
-      <label class="form-label">Nome da tarefa</label>
-      <input class="form-input" id="tf-name" placeholder="Ex: Aspirar o sofá"/>
+      <label class="form-lbl">Nome da tarefa</label>
+      <input class="form-inp" id="tf-name" placeholder="Ex: Aspirar o sofá"/>
     </div>
     <div class="form-group">
-      <label class="form-label">Cômodo</label>
-      <select class="form-select" id="tf-room"></select>
+      <label class="form-lbl">Cômodo</label>
+      <select class="form-sel" id="tf-room"></select>
     </div>
     <div class="form-group">
-      <label class="form-label">Dias da semana</label>
+      <label class="form-lbl">Dias da semana</label>
       <div class="days-grid" id="tf-days"></div>
     </div>
   </div>
 </div>
 
-<!-- FORM: NOVO / EDITAR CÔMODO -->
+<!-- ROOM FORM -->
 <div class="screen" id="screen-room-form">
   <div class="form-topbar">
     <button class="form-back" onclick="goBack()">←</button>
-    <span class="form-screen-title" id="room-form-title">Novo Cômodo</span>
-    <button class="form-save-btn" onclick="saveRoom()">Salvar</button>
+    <span class="form-title" id="room-form-title">Novo Cômodo</span>
+    <button class="save-btn" onclick="saveRoom()">Salvar</button>
   </div>
   <div class="form-scroller">
     <div class="form-group">
-      <label class="form-label">Nome do cômodo</label>
-      <input class="form-input" id="rf-name" placeholder="Ex: Escritório" oninput="uprev()"/>
+      <label class="form-lbl">Nome do cômodo</label>
+      <input class="form-inp" id="rf-name" placeholder="Ex: Escritório" oninput="uprev()"/>
     </div>
     <div class="form-group">
-      <label class="form-label">Ícone</label>
+      <label class="form-lbl">Ícone</label>
       <div class="icon-grid" id="rf-icons"></div>
     </div>
     <div class="form-group">
-      <label class="form-label">Cor</label>
+      <label class="form-lbl">Cor</label>
       <div class="color-grid" id="rf-colors"></div>
     </div>
     <div class="form-group">
-      <label class="form-label">Pré-visualização</label>
-      <div class="prev-card" id="rf-prev" style="border-top-color:#E8C547;border-left-color:#E8C547">
+      <label class="form-lbl">Pré-visualização</label>
+      <div class="prev-card" id="rf-prev">
         <span id="prev-ic" style="font-size:24px">🏠</span>
-        <span class="prev-name" id="prev-nm" style="color:#E8C547">Nome do cômodo</span>
+        <span class="prev-nm" id="prev-nm">Nome do cômodo</span>
       </div>
     </div>
     <div class="danger-zone" id="rf-danger" style="display:none">
       <button class="danger-btn" onclick="toggleConfirmDelete()">🗑️ Excluir este cômodo</button>
       <div class="confirm-box" id="confirm-del-box">
         <p class="confirm-txt" id="confirm-del-txt"></p>
-        <div class="ma">
-          <button class="can-btn" onclick="toggleConfirmDelete()">Cancelar</button>
-          <button class="del-ok-btn" onclick="delRoomDo()">Excluir</button>
+        <div class="btn-row">
+          <button class="btn-ghost" onclick="toggleConfirmDelete()">Cancelar</button>
+          <button class="btn-danger" onclick="delRoomDo()">Excluir</button>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- DETALHE DO CÔMODO -->
+<!-- ROOM DETAIL -->
 <div class="screen" id="screen-room-detail">
   <div class="form-topbar">
     <button class="form-back" onclick="goBack()">←</button>
-    <span class="form-screen-title" id="rd-title"></span>
-    <button class="form-save-btn" id="rd-edit-btn" onclick="goEditRoom(selRoom)" style="background:#1A1A1A;border:1px solid #333;color:#AAA">✏️ Editar</button>
+    <span class="form-title" id="rd-title"></span>
+    <button class="save-btn" id="rd-edit-btn" onclick="goEditRoom(selRoom)" style="background:var(--bg2);color:var(--text2);border:1px solid var(--border);">Editar</button>
   </div>
   <div class="scroller" id="room-detail-content"></div>
   <button class="fab" id="rd-fab" onclick="goAddTaskRoom(selRoom)" style="display:none">+</button>
@@ -282,12 +329,12 @@ const SB_KEY="sb_publishable_AlnSMyFJSTYWmvoYioIYwQ_HrJaoQSW";
 const ADMIN_PIN="1234";
 const DAYS=["Seg","Ter","Qua","Qui","Sex","Sáb","Dom"];
 const DAYS_FULL=["Segunda","Terça","Quarta","Quinta","Sexta","Sábado","Domingo"];
-const PAL=["#E8C547","#E87A47","#E84747","#E847A0","#C97AE8","#7A9BE8","#47C9C9","#47E8A0","#A0E847","#E8E847"];
+const PAL=["#5C7A5C","#C4683A","#8B6914","#4A7A8A","#7A5C8A","#C4904A","#3A7A6A","#8A4A4A","#4A5C8A","#7A7A3A"];
 const ICONS=["🛋️","🍳","🛏️","🚿","🧺","🏠","🪟","🏡","🚪","🧹","🪴","🖥️","🎮","📚","🧸","🐾","🚗","🏋️","🌿","🧴"];
 const TDI=new Date().getDay()===0?6:new Date().getDay()-1;
 const TDD=new Date().toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"});
 const TDS=new Date().toISOString().slice(0,10);
-const SEED_R=[{id:"sala",name:"Sala",icon:"🛋️",color:"#E8C547"},{id:"cozinha",name:"Cozinha",icon:"🍳",color:"#E87A47"},{id:"quarto",name:"Quarto",icon:"🛏️",color:"#7A9BE8"},{id:"banheiro",name:"Banheiro",icon:"🚿",color:"#47C9C9"},{id:"lavanderia",name:"Lavanderia",icon:"🧺",color:"#C97AE8"}];
+const SEED_R=[{id:"sala",name:"Sala",icon:"🛋️",color:"#5C7A5C"},{id:"cozinha",name:"Cozinha",icon:"🍳",color:"#C4683A"},{id:"quarto",name:"Quarto",icon:"🛏️",color:"#4A7A8A"},{id:"banheiro",name:"Banheiro",icon:"🚿",color:"#3A7A6A"},{id:"lavanderia",name:"Lavanderia",icon:"🧺",color:"#7A5C8A"}];
 const SEED_T=[{id:"t1",room_id:"sala",name:"Aspirar o sofá",days:[0,3]},{id:"t2",room_id:"sala",name:"Limpar mesa de centro",days:[1,4]},{id:"t3",room_id:"sala",name:"Varrer o chão",days:[0,2,4]},{id:"t4",room_id:"sala",name:"Passar pano no chão",days:[1,5]},{id:"t5",room_id:"cozinha",name:"Lavar louça",days:[0,1,2,3,4,5,6]},{id:"t6",room_id:"cozinha",name:"Limpar fogão",days:[1,4,6]},{id:"t7",room_id:"cozinha",name:"Passar pano na pia",days:[0,2,4,6]},{id:"t8",room_id:"cozinha",name:"Limpar geladeira",days:[5]},{id:"t9",room_id:"quarto",name:"Fazer a cama",days:[0,1,2,3,4,5,6]},{id:"t10",room_id:"quarto",name:"Varrer o chão",days:[2,5]},{id:"t11",room_id:"quarto",name:"Trocar lençóis",days:[5]},{id:"t12",room_id:"quarto",name:"Organizar guarda-roupa",days:[6]},{id:"t13",room_id:"banheiro",name:"Limpar vaso sanitário",days:[1,4,6]},{id:"t14",room_id:"banheiro",name:"Esfregar o box",days:[3,6]},{id:"t15",room_id:"banheiro",name:"Limpar pia",days:[1,3,5]},{id:"t16",room_id:"banheiro",name:"Trocar toalhas",days:[3,6]},{id:"t17",room_id:"lavanderia",name:"Lavar roupas",days:[1,4]},{id:"t18",room_id:"lavanderia",name:"Estender roupas",days:[1,4]},{id:"t19",room_id:"lavanderia",name:"Dobrar e guardar",days:[3,6]}];
 
 let role=null,rooms=[],tasks=[],smap={};
@@ -296,7 +343,6 @@ let taskFormMode="add",taskFormData={id:null,name:"",roomId:"",days:[]};
 let roomFormMode="add",roomFormData={id:null,name:"",icon:"🏠",color:PAL[0]};
 let backScreen="screen-main";
 
-// ── Supabase ──
 async function sb(path,opts={}){
   const r=await fetch(`${SB_URL}/rest/v1/${path}`,{headers:{apikey:SB_KEY,Authorization:`Bearer ${SB_KEY}`,"Content-Type":"application/json",Prefer:opts.prefer??"return=representation"},...opts});
   const t=await r.text();if(!r.ok)throw new Error(t);return t?JSON.parse(t):[];
@@ -310,37 +356,28 @@ async function seedIfEmpty(){
   if(!ex.length){await sb("rooms",{method:"POST",prefer:"resolution=ignore",body:JSON.stringify(SEED_R)});await sb("tasks",{method:"POST",prefer:"resolution=ignore",body:JSON.stringify(SEED_T)});}
 }
 
-// ── Screen navigation ──
-function showScreen(id){
-  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
-}
+function showScreen(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");}
 function goBack(){showScreen(backScreen);if(backScreen==="screen-room-detail")renderRoomDetail();}
-
-// ── Helpers ──
-function tfd(day){return rooms.flatMap(r=>tasks.filter(t=>t.room_id===r.id&&t.days.includes(day)).map(t=>({...t,rc:r.color,ri:r.icon,rn:r.name})));}
+function tfd(day){return rooms.flatMap(r=>tasks.filter(t=>t.room_id===r.id&&t.days.includes(day)).map(t=>({...t,rc:r.color})));}
 function rate(day){const ts=tfd(day);if(!ts.length)return 0;return Math.round(ts.filter(t=>smap[`${t.id}_${day}`]).length/ts.length*100);}
 function roomById(id){return rooms.find(r=>r.id===id);}
 function setSyncDot(v){const el=document.getElementById("sync-dot");if(el)el.style.display=v?"inline":"none";}
 
-// ── Toggle task ──
 async function toggleTask(tid,di){
   const k=`${tid}_${di}`,cur=!!smap[k];
-  smap[k]=!cur;renderMain();if(selRoom)renderRoomDetail();
+  smap[k]=!cur;renderMain();if(selRoom&&document.getElementById("screen-room-detail").classList.contains("active"))renderRoomDetail();
   syncing=true;setSyncDot(true);
   try{await sb("task_status",{method:"POST",prefer:"resolution=merge-duplicates",body:JSON.stringify({id:`${tid}_${di}_${TDS}`,task_id:tid,day_index:di,date:TDS,completed:!cur,updated_at:new Date().toISOString()})});}
   catch(e){smap[k]=cur;renderMain();}
   syncing=false;setSyncDot(false);
 }
 
-// ── Delete task ──
 async function delTask(tid){
   if(!confirm("Excluir esta tarefa?"))return;
   await sb(`tasks?id=eq.${tid}`,{method:"DELETE",prefer:""});
   await loadAll();renderMain();if(selRoom)renderRoomDetail();
 }
 
-// ── Task form ──
 function goAddTask(){
   taskFormMode="add";taskFormData={id:null,name:"",roomId:"",days:[]};
   backScreen="screen-main";
@@ -348,8 +385,7 @@ function goAddTask(){
   document.getElementById("tf-name").value="";
   const sel=document.getElementById("tf-room");
   sel.innerHTML=`<option value="">Selecione o cômodo</option>`+rooms.map(r=>`<option value="${r.id}">${r.icon} ${r.name}</option>`).join("");
-  renderTfDays();
-  showScreen("screen-task");
+  renderTfDays();showScreen("screen-task");
   setTimeout(()=>document.getElementById("tf-name").focus(),200);
 }
 function goAddTaskRoom(rid){
@@ -360,14 +396,12 @@ function goAddTaskRoom(rid){
   const sel=document.getElementById("tf-room");
   sel.innerHTML=`<option value="">Selecione o cômodo</option>`+rooms.map(r=>`<option value="${r.id}">${r.icon} ${r.name}</option>`).join("");
   sel.value=rid;
-  taskFormData.roomId=rid;
-  renderTfDays();
-  showScreen("screen-task");
+  renderTfDays();showScreen("screen-task");
   setTimeout(()=>document.getElementById("tf-name").focus(),200);
 }
 function renderTfDays(){
   document.getElementById("tf-days").innerHTML=DAYS.map((d,i)=>
-    `<button class="day-toggle${taskFormData.days.includes(i)?" on":""}" onclick="toggleTfDay(${i})">${d}</button>`
+    `<button class="day-tog${taskFormData.days.includes(i)?" on":""}" onclick="toggleTfDay(${i})">${d}</button>`
   ).join("");
 }
 function toggleTfDay(i){
@@ -378,18 +412,13 @@ async function saveTask(){
   const name=document.getElementById("tf-name").value.trim();
   const roomId=document.getElementById("tf-room").value;
   if(!name||!roomId||!taskFormData.days.length){alert("Preencha nome, cômodo e pelo menos um dia.");return;}
-  if(taskFormMode==="add"){
-    await sb("tasks",{method:"POST",body:JSON.stringify({id:"t"+Date.now(),room_id:roomId,name,days:taskFormData.days})});
-  } else {
-    await sb(`tasks?id=eq.${taskFormData.id}`,{method:"PATCH",body:JSON.stringify({name,room_id:roomId,days:taskFormData.days})});
-  }
+  if(taskFormMode==="add"){await sb("tasks",{method:"POST",body:JSON.stringify({id:"t"+Date.now(),room_id:roomId,name,days:taskFormData.days})});}
+  else{await sb(`tasks?id=eq.${taskFormData.id}`,{method:"PATCH",body:JSON.stringify({name,room_id:roomId,days:taskFormData.days})});}
   await loadAll();goBack();renderMain();
 }
 
-// ── Room form ──
 function goAddRoom(){
-  roomFormMode="add";
-  roomFormData={id:null,name:"",icon:"🏠",color:PAL[rooms.length%PAL.length]};
+  roomFormMode="add";roomFormData={id:null,name:"",icon:"🏠",color:PAL[rooms.length%PAL.length]};
   backScreen="screen-main";
   document.getElementById("room-form-title").textContent="Novo Cômodo";
   document.getElementById("rf-name").value="";
@@ -408,13 +437,13 @@ function goEditRoom(rid){
   const tc=tasks.filter(t=>t.room_id===r.id).length;
   document.getElementById("rf-danger").style.display="block";
   document.getElementById("confirm-del-box").classList.remove("show");
-  document.getElementById("confirm-del-txt").innerHTML=`Excluir <strong style="color:${r.color}">${r.name}</strong>?${tc>0?`<br>As ${tc} tarefa(s) serão removidas permanentemente.`:""}`;
+  document.getElementById("confirm-del-txt").innerHTML=`Excluir <strong>${r.name}</strong>?${tc>0?`<br>As ${tc} tarefa(s) serão removidas permanentemente.`:""}`;
   renderRfIcons();renderRfColors();uprev();
   showScreen("screen-room-form");
 }
 function renderRfIcons(){
   document.getElementById("rf-icons").innerHTML=ICONS.map(ic=>
-    `<button class="icon-pick${roomFormData.icon===ic?" on":""}" style="border-color:${roomFormData.icon===ic?roomFormData.color:"#222"};border-width:${roomFormData.icon===ic?"2px":"1px"}" onclick="pickIcon('${ic}')">${ic}</button>`
+    `<button class="icon-pick${roomFormData.icon===ic?" on":""}" style="border-color:${roomFormData.icon===ic?roomFormData.color:"var(--border)"};border-width:${roomFormData.icon===ic?"2px":"1.5px"}" onclick="pickIcon('${ic}')">${ic}</button>`
   ).join("");
 }
 function renderRfColors(){
@@ -427,7 +456,7 @@ function pickColor(c){roomFormData.color=c;renderRfColors();renderRfIcons();upre
 function uprev(){
   roomFormData.name=document.getElementById("rf-name").value;
   const p=document.getElementById("rf-prev"),nm=document.getElementById("prev-nm"),ic=document.getElementById("prev-ic");
-  p.style.borderTopColor=roomFormData.color;p.style.borderLeftColor=roomFormData.color;
+  p.style.borderLeftColor=roomFormData.color;
   nm.style.color=roomFormData.color;nm.textContent=roomFormData.name||"Nome do cômodo";
   ic.textContent=roomFormData.icon;
 }
@@ -435,52 +464,44 @@ async function saveRoom(){
   const name=document.getElementById("rf-name").value.trim();
   if(!name){alert("Digite o nome do cômodo.");return;}
   roomFormData.name=name;
-  if(roomFormMode==="add"){
-    await sb("rooms",{method:"POST",body:JSON.stringify({id:"room_"+Date.now(),name:roomFormData.name,icon:roomFormData.icon,color:roomFormData.color})});
-  } else {
-    await sb(`rooms?id=eq.${roomFormData.id}`,{method:"PATCH",body:JSON.stringify({name:roomFormData.name,icon:roomFormData.icon,color:roomFormData.color})});
-  }
+  if(roomFormMode==="add"){await sb("rooms",{method:"POST",body:JSON.stringify({id:"room_"+Date.now(),name:roomFormData.name,icon:roomFormData.icon,color:roomFormData.color})});}
+  else{await sb(`rooms?id=eq.${roomFormData.id}`,{method:"PATCH",body:JSON.stringify({name:roomFormData.name,icon:roomFormData.icon,color:roomFormData.color})});}
   await loadAll();goBack();renderMain();
 }
 function toggleConfirmDelete(){document.getElementById("confirm-del-box").classList.toggle("show");}
 async function delRoomDo(){
   await sb(`rooms?id=eq.${roomFormData.id}`,{method:"DELETE",prefer:""});
   if(selRoom===roomFormData.id)selRoom=null;
-  await loadAll();
-  showScreen("screen-main");sv(view);
+  await loadAll();showScreen("screen-main");sv(view);
 }
 
-// ── Room detail ──
 function goRoomDetail(rid){
-  selRoom=rid;
-  const rm=roomById(rid);
+  selRoom=rid;const rm=roomById(rid);
   document.getElementById("rd-title").textContent=`${rm.icon} ${rm.name}`;
   document.getElementById("rd-edit-btn").style.display=role==="admin"?"block":"none";
   document.getElementById("rd-fab").style.display=role==="admin"?"flex":"none";
-  renderRoomDetail();
-  showScreen("screen-room-detail");
+  renderRoomDetail();showScreen("screen-room-detail");
 }
 function renderRoomDetail(){
   const rm=roomById(selRoom);if(!rm)return;
   const ia=role==="admin";
   const rt=tasks.filter(t=>t.room_id===rm.id);
-  let h=`<div class="rdh" style="background:${rm.color}22"><span class="rdhic">${rm.icon}</span><span class="rdhtl" style="color:${rm.color}">${rm.name}</span></div>`;
+  let h=`<div class="rdh" style="background:${rm.color}14;border-left-color:${rm.color}"><span class="rdhic">${rm.icon}</span><span class="rdhtl" style="color:${rm.color}">${rm.name}</span></div>`;
   let has=false;
   DAYS_FULL.forEach((dn,di)=>{
     const dt=rt.filter(t=>t.days.includes(di));if(!dt.length)return;has=true;
     h+=`<div class="wdb"><div class="wdl">${dn}${di===TDI?`<span class="today-tag">hoje</span>`:""}</div>`;
     dt.forEach(t=>{
       const done=!!smap[`${t.id}_${di}`];
-      h+=`<div class="ti${done?" done":""}" onclick="toggleTask('${t.id}',${di})"><div class="chk${done?" checked":""}" style="${done?`background:${rm.color}`:""}"> ${done?`<span class="ckm">✓</span>`:""}</div><span class="tn">${t.name}</span>${ia?`<button class="del-btn" onclick="event.stopPropagation();delTask('${t.id}')">×</button>`:""}</div>`;
+      h+=`<div class="ti${done?" done":""}" onclick="toggleTask('${t.id}',${di})"><div class="chk${done?" checked":""}" style="${done?`background:${rm.color};border-color:${rm.color}`:""}"> ${done?`<span class="ckm">✓</span>`:""}</div><span class="tn">${t.name}</span>${ia?`<button class="del-btn" onclick="event.stopPropagation();delTask('${t.id}')">×</button>`:""}</div>`;
     });
     h+=`</div>`;
   });
-  if(!has)h+=`<div class="empty"><div class="empty-ic">📋</div><p class="empty-tx">Nenhuma tarefa ainda.</p></div>`;
+  if(!has)h+=`<div class="empty"><div class="empty-ic">📋</div><p class="empty-tx">Nenhuma tarefa ainda.<br>Use o botão + para adicionar.</p></div>`;
   if(ia)h+=`<div style="height:80px"></div>`;
   document.getElementById("room-detail-content").innerHTML=h;
 }
 
-// ── Main render ──
 function sv(v){
   view=v;
   ["day","room","week"].forEach(x=>document.getElementById(`tab-${x}`).classList.toggle("active",x===v));
@@ -497,20 +518,24 @@ function renderMain(){
 function sd2(i){selDay=i;renderMain();}
 
 function renderDay(ia){
-  const r=rate(selDay);const bc=r===100?"#47C99A":"#E8C547";
+  const r=rate(selDay);const bc=r===100?"#3A7A5A":"#8B6914";
   let h=`<div class="day-bar">`;
   DAYS.forEach((d,i)=>{const ri=rate(i);h+=`<button class="day-btn${selDay===i?" active":""}${i===TDI?" today":""}" onclick="sd2(${i})"><span class="day-lbl">${d}</span><span class="day-cnt">${tfd(i).length}</span>${ri>0?`<div class="day-prog" style="width:${ri}%"></div>`:""}</button>`;});
-  h+=`</div><div class="prog-sec"><div class="prog-hdr"><span class="prog-lbl">${DAYS_FULL[selDay]}</span><span class="prog-pct">${r}% concluído</span></div><div class="prog-track"><div class="prog-fill" style="width:${r}%;background:${bc}"></div></div></div>`;
+  h+=`</div>`;
+  h+=`<div class="prog-sec"><div class="prog-hdr"><span class="prog-lbl">${DAYS_FULL[selDay]}</span><span class="prog-pct">${r}%</span></div><div class="prog-track"><div class="prog-fill" style="width:${r}%;background:${bc}"></div></div></div>`;
   let has=false;
   rooms.forEach(rm=>{
     const dt=tasks.filter(t=>t.room_id===rm.id&&t.days.includes(selDay));
     if(!dt.length)return;has=true;
     const dn=dt.filter(t=>smap[`${t.id}_${selDay}`]).length;
-    h+=`<div class="rc"><div class="rch" style="border-left-color:${rm.color}"><span class="rci">${rm.icon}</span><span class="rcn">${rm.name}</span><span class="rbadge" style="background:${rm.color}22;color:${rm.color}">${dn}/${dt.length}</span></div><div class="tlist">`;
-    dt.forEach(t=>{const done=!!smap[`${t.id}_${selDay}`];h+=`<div class="ti${done?" done":""}" onclick="toggleTask('${t.id}',${selDay})"><div class="chk${done?" checked":""}" style="${done?`background:${rm.color}`:""}"> ${done?`<span class="ckm">✓</span>`:""}</div><span class="tn">${t.name}</span>${ia?`<button class="del-btn" onclick="event.stopPropagation();delTask('${t.id}')">×</button>`:""}</div>`;});
+    h+=`<div class="rc"><div class="rch" style="border-left-color:${rm.color}"><span class="rci">${rm.icon}</span><span class="rcn">${rm.name}</span><span class="rbadge" style="background:${rm.color}18;color:${rm.color}">${dn}/${dt.length}</span></div><div class="tlist">`;
+    dt.forEach(t=>{
+      const done=!!smap[`${t.id}_${selDay}`];
+      h+=`<div class="ti${done?" done":""}" onclick="toggleTask('${t.id}',${selDay})"><div class="chk${done?" checked":""}" style="${done?`background:${rm.color};border-color:${rm.color}`:""}"> ${done?`<span class="ckm">✓</span>`:""}</div><span class="tn">${t.name}</span>${ia?`<button class="del-btn" onclick="event.stopPropagation();delTask('${t.id}')">×</button>`:""}</div>`;
+    });
     h+=`</div></div>`;
   });
-  if(!has)h+=`<div class="empty"><div class="empty-ic">🎉</div><p class="empty-tx">Dia de folga! Sem tarefas para ${DAYS_FULL[selDay]}.</p></div>`;
+  if(!has)h+=`<div class="empty"><div class="empty-ic">🎉</div><p class="empty-tx">Nenhuma tarefa para ${DAYS_FULL[selDay]}.<br>Dia de folga!</p></div>`;
   return h;
 }
 
@@ -522,7 +547,7 @@ function renderRooms(ia){
     h+=`<div class="room-tile" style="border-top-color:${rm.color}" onclick="goRoomDetail('${rm.id}')">
       ${ia?`<div class="rta"><button class="rta-btn" onclick="event.stopPropagation();goEditRoom('${rm.id}')">✏️</button></div>`:""}
       <div class="rti">${rm.icon}</div><div class="rtn">${rm.name}</div>
-      <div class="rts"><span>${tot} tarefas</span><span style="color:${rm.color}">${tod} hoje</span></div>
+      <div class="rts"><span>${tot} tarefas</span><span style="color:${rm.color};font-weight:700">${tod} hoje</span></div>
     </div>`;
   });
   if(ia)h+=`<div class="add-tile" onclick="goAddRoom()"><div class="add-tile-ic">+</div><div class="add-tile-lbl">Novo Cômodo</div></div>`;
@@ -534,7 +559,7 @@ function renderWeek(){
   DAYS_FULL.forEach((dn,di)=>{
     const ts=tfd(di);const done=ts.filter(t=>smap[`${t.id}_${di}`]).length;
     const r=ts.length?Math.round(done/ts.length*100):0;
-    const bc=r===100?"#47C99A":r>0?"#E8C547":"#333";
+    const bc=r===100?"#3A7A5A":r>0?"#8B6914":"#DDD8CE";
     const ri=rooms.filter(rm=>tasks.some(t=>t.room_id===rm.id&&t.days.includes(di))).map(rm=>rm.icon).join(" ");
     h+=`<div class="wc${di===TDI?" today":""}" onclick="sv('day');sd2(${di})">
       <div class="wcd">${dn}${di===TDI?`<span class="tdot">●</span>`:""}</div>
@@ -546,20 +571,30 @@ function renderWeek(){
   return h+`</div>`;
 }
 
-// ── Login ──
 function renderLogin(){
   const w=document.getElementById("login-screen");
-  w.style.cssText="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;position:relative;z-index:1;";
-  w.innerHTML=`<div class="lg-logo">🧹</div><h1 class="lg-title">CasaLimpa</h1><p class="lg-sub">Como você quer entrar?</p>
-  <div class="lg-btns" id="lc">
-    <button class="lg-btn lg-btn-a" onclick="gpin()"><span style="font-size:24px">👑</span><span class="lg-btn-lbl">Administrador</span><span class="lg-btn-sub">Editar tarefas e cômodos</span></button>
-    <button class="lg-btn lg-btn-e" onclick="dlogin('executor')"><span style="font-size:24px">✅</span><span class="lg-btn-lbl">Executor</span><span class="lg-btn-sub">Marcar tarefas concluídas</span></button>
+  w.style.cssText="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 28px;background:var(--bg);position:relative;z-index:1;";
+  w.innerHTML=`
+  <div class="lg-brand">
+    <div class="lg-logo">🧹</div>
+    <h1 class="lg-title">CasaLimpa</h1>
+    <p class="lg-sub">Sua casa organizada</p>
   </div>
-  <div class="pin-wrap" id="lp">
+  <div class="lg-btns" id="lc">
+    <button class="lg-btn lg-btn-i" onclick="dlogin('iniciar')">
+      <span class="lg-btn-icon">▶️</span>
+      <div class="lg-btn-text"><span class="lg-btn-lbl">Iniciar</span><span class="lg-btn-sub">Ver e marcar tarefas do dia</span></div>
+    </button>
+    <button class="lg-btn lg-btn-a" onclick="gpin()">
+      <span class="lg-btn-icon">⚙️</span>
+      <div class="lg-btn-text"><span class="lg-btn-lbl">Administrador</span><span class="lg-btn-sub">Gerenciar cômodos e tarefas</span></div>
+    </button>
+  </div>
+  <div class="pin-section" id="lp">
     <p class="pin-lbl">PIN de administrador</p>
     <input class="pin-inp" id="pinf" type="password" inputmode="numeric" maxlength="6" placeholder="••••" onkeydown="if(event.key==='Enter')trypin()"/>
     <p class="pin-err" id="pe">PIN incorreto</p>
-    <div class="ma" style="margin-top:8px"><button class="can-btn" onclick="bkc()">Voltar</button><button class="ok-btn" onclick="trypin()">Entrar</button></div>
+    <div class="pin-actions"><button class="btn-ghost" onclick="bkc()">Voltar</button><button class="btn-primary" onclick="trypin()">Entrar</button></div>
     <p class="pin-hint">PIN padrão: 1234</p>
   </div>`;
 }
@@ -574,12 +609,14 @@ function dlogin(r){
   role=r;
   document.getElementById("login-screen").style.display="none";
   const rp=document.getElementById("role-pill");
-  rp.textContent=r==="admin"?"👑 Admin":"✅ Executor";
-  rp.className="role-pill "+(r==="admin"?"ra":"re");
-  document.getElementById("today-badge").innerHTML=`Hoje é <strong>${DAYS_FULL[TDI]}, ${TDD}</strong>`;
-  showScreen("screen-main");
-  sv("day");
-  poll=setInterval(async()=>{await loadAll();renderMain();if(document.getElementById("screen-room-detail").classList.contains("active"))renderRoomDetail();},8000);
+  if(r==="admin"){rp.textContent="⚙️ Admin";rp.className="role-pill rp-a";}
+  else{rp.textContent="▶️ Iniciando";rp.className="role-pill rp-i";}
+  document.getElementById("today-badge").innerHTML=`${DAYS_FULL[TDI]}, ${TDD}`;
+  showScreen("screen-main");sv("day");
+  poll=setInterval(async()=>{
+    await loadAll();renderMain();
+    if(document.getElementById("screen-room-detail").classList.contains("active"))renderRoomDetail();
+  },8000);
 }
 function doLogout(){
   role=null;selRoom=null;view="day";
