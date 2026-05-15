@@ -19,9 +19,7 @@ const link=document.createElement("link");link.rel="manifest";link.href=URL.crea
 body{background:#0F0F0F;color:#F0EDE4;font-family:Georgia,'Times New Roman',serif;min-height:100vh;overflow-x:hidden;}
 button,input,select{font-family:Georgia,'Times New Roman',serif;cursor:pointer;}
 #bg{position:fixed;inset:0;background:radial-gradient(circle at 20% 20%,rgba(232,197,71,.06) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(71,201,201,.06) 0%,transparent 50%);pointer-events:none;z-index:0;}
-/* Loading */
 #loading{position:fixed;inset:0;background:#0F0F0F;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:200;}
-/* Login */
 #login-wrap{position:relative;z-index:1;display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;}
 .login-logo{font-size:56px;margin-bottom:8px;}
 .login-title{font-size:28px;font-weight:bold;margin-bottom:4px;}
@@ -38,7 +36,6 @@ button,input,select{font-family:Georgia,'Times New Roman',serif;cursor:pointer;}
 .pin-input.error{border-color:#E84747;}
 .pin-error{display:none;color:#E84747;font-size:12px;text-align:center;margin-bottom:8px;}
 .pin-hint{color:#444;font-size:11px;text-align:center;margin-top:12px;}
-/* App */
 #app-wrap{display:none;flex-direction:column;min-height:100vh;position:relative;z-index:1;}
 header{display:flex;justify-content:space-between;align-items:flex-start;padding:14px 18px 10px;border-bottom:1px solid #2A2A2A;}
 .hl{display:flex;align-items:center;gap:10px;}
@@ -118,11 +115,12 @@ header{display:flex;justify-content:space-between;align-items:flex-start;padding
 .wcr{font-size:11px;color:#888;margin-bottom:6px;}
 .wri{font-size:14px;display:flex;gap:3px;flex-wrap:wrap;}
 .fab{position:fixed;bottom:24px;right:20px;width:52px;height:52px;border-radius:50%;background:#E8C547;border:none;color:#0F0F0F;font-size:24px;box-shadow:0 4px 20px rgba(232,197,71,.25);z-index:10;display:flex;align-items:center;justify-content:center;}
-/* Modals */
-.overlay{position:fixed;left:0;right:0;bottom:0;top:0;background:rgba(0,0,0,.55);display:none;align-items:flex-end;justify-content:center;z-index:100;}
-.modal{background:#191919;border:1px solid #2A2A2A;border-radius:20px 20px 0 0;padding:20px 20px 0;width:100%;max-width:520px;max-height:80vh;display:flex;flex-direction:column;position:relative;}
-.modal-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;}
-.modal-footer{padding:12px 0 max(24px,env(safe-area-inset-bottom));border-top:1px solid #222;margin-top:4px;flex-shrink:0;}
+/* MODALS — fora do ciclo de render, nunca destruídos */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;justify-content:center;z-index:100;}
+.overlay.show{display:flex;}
+.modal{background:#191919;border:1px solid #2A2A2A;border-radius:20px 20px 0 0;width:100%;max-width:520px;display:flex;flex-direction:column;max-height:85vh;}
+.modal-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 20px 8px;}
+.modal-footer{padding:12px 20px max(24px,env(safe-area-inset-bottom));border-top:1px solid #1E1E1E;flex-shrink:0;}
 .mt{font-size:16px;font-weight:bold;margin-bottom:16px;}
 .mi{width:100%;background:#111;border:1px solid #2A2A2A;border-radius:10px;color:#F0EDE4;padding:10px 12px;font-size:13px;margin-bottom:12px;}
 .ml{color:#888;font-size:12px;margin-bottom:8px;display:block;}
@@ -136,10 +134,10 @@ header{display:flex;justify-content:space-between;align-items:flex-start;padding
 .cb{width:28px;height:28px;border-radius:50%;border:2px solid transparent;display:flex;align-items:center;justify-content:center;transition:transform .15s;}
 .cb.active{border-color:#F0EDE4;transform:scale(1.15);}
 .cck{color:#0F0F0F;font-size:12px;font-weight:bold;}
-.rprev{display:flex;align-items:center;gap:8px;background:#111;border-radius:9px;padding:10px 13px;border:1px solid #222;border-top:3px solid;border-left:3px solid;margin-bottom:16px;}
+.rprev{display:flex;align-items:center;gap:8px;background:#111;border-radius:9px;padding:10px 13px;border:1px solid #222;border-top:3px solid;border-left:3px solid;margin-bottom:8px;}
 .rpn{font-weight:bold;font-size:13px;}
 .dmi{font-size:36px;text-align:center;margin-bottom:9px;}
-.dw{color:#AAA;font-size:13px;line-height:1.6;margin-bottom:20px;text-align:center;}
+.dw{color:#AAA;font-size:13px;line-height:1.6;margin-bottom:4px;text-align:center;}
 .ma{display:flex;gap:8px;}
 .can-btn{flex:1;background:#111;border:1px solid #2A2A2A;border-radius:10px;color:#888;padding:11px;font-size:13px;}
 .ok-btn{flex:1;background:#E8C547;border:none;border-radius:10px;color:#0F0F0F;padding:11px;font-size:13px;font-weight:bold;}
@@ -152,6 +150,65 @@ header{display:flex;justify-content:space-between;align-items:flex-start;padding
 <div id="login-wrap"></div>
 <div id="app-wrap"></div>
 
+<!-- MODAIS FIXOS NO BODY — nunca re-renderizados -->
+<div class="overlay" id="mat">
+  <div class="modal">
+    <div class="modal-body">
+      <div class="mt">Nova Tarefa</div>
+      <input class="mi" id="nt-name" placeholder="Nome da tarefa..."/>
+      <select class="mi" id="nt-room"><option value="">Selecione o cômodo</option></select>
+      <span class="ml">Dias da semana:</span>
+      <div class="days-row" id="drow"></div>
+    </div>
+    <div class="modal-footer">
+      <div class="ma">
+        <button class="can-btn" onclick="hideModal('mat')">Cancelar</button>
+        <button class="ok-btn" onclick="addTaskDo()">Adicionar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="mr">
+  <div class="modal">
+    <div class="modal-body">
+      <div class="mt" id="mr-title">Novo Cômodo</div>
+      <input class="mi" id="rname" placeholder="Nome do cômodo..." oninput="eroom.name=this.value;uprev()"/>
+      <span class="ml">Ícone:</span>
+      <div class="icon-row" id="icon-row"></div>
+      <span class="ml">Cor:</span>
+      <div class="color-row" id="color-row"></div>
+      <span class="ml">Pré-visualização:</span>
+      <div class="rprev" id="rprev" style="border-top-color:#E8C547;border-left-color:#E8C547">
+        <span id="prev-ic" style="font-size:20px">🏠</span>
+        <span id="prev-nm" class="rpn" style="color:#E8C547">Nome do cômodo</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="ma">
+        <button class="can-btn" onclick="hideModal('mr')">Cancelar</button>
+        <button class="ok-btn" id="mr-save-btn" onclick="saveRoom()">Criar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" id="md">
+  <div class="modal">
+    <div class="modal-body">
+      <div class="dmi" id="del-icon">🏠</div>
+      <div class="mt" style="text-align:center">Excluir cômodo?</div>
+      <p class="dw" id="del-msg"></p>
+    </div>
+    <div class="modal-footer">
+      <div class="ma">
+        <button class="can-btn" onclick="hideModal('md')">Cancelar</button>
+        <button class="del-ok-btn" onclick="delRoomDo()">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 const SB_URL="https://nyftyoptskuybbiqkflv.supabase.co";
 const SB_KEY="sb_publishable_AlnSMyFJSTYWmvoYioIYwQ_HrJaoQSW";
@@ -163,37 +220,9 @@ const ICONS=["🛋️","🍳","🛏️","🚿","🧺","🏠","🪟","🏡","🚪
 const TDI=new Date().getDay()===0?6:new Date().getDay()-1;
 const TDD=new Date().toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"});
 const TDS=new Date().toISOString().slice(0,10);
+const SEED_R=[{id:"sala",name:"Sala",icon:"🛋️",color:"#E8C547"},{id:"cozinha",name:"Cozinha",icon:"🍳",color:"#E87A47"},{id:"quarto",name:"Quarto",icon:"🛏️",color:"#7A9BE8"},{id:"banheiro",name:"Banheiro",icon:"🚿",color:"#47C9C9"},{id:"lavanderia",name:"Lavanderia",icon:"🧺",color:"#C97AE8"}];
+const SEED_T=[{id:"t1",room_id:"sala",name:"Aspirar o sofá",days:[0,3]},{id:"t2",room_id:"sala",name:"Limpar mesa de centro",days:[1,4]},{id:"t3",room_id:"sala",name:"Varrer o chão",days:[0,2,4]},{id:"t4",room_id:"sala",name:"Passar pano no chão",days:[1,5]},{id:"t5",room_id:"cozinha",name:"Lavar louça",days:[0,1,2,3,4,5,6]},{id:"t6",room_id:"cozinha",name:"Limpar fogão",days:[1,4,6]},{id:"t7",room_id:"cozinha",name:"Passar pano na pia",days:[0,2,4,6]},{id:"t8",room_id:"cozinha",name:"Limpar geladeira",days:[5]},{id:"t9",room_id:"quarto",name:"Fazer a cama",days:[0,1,2,3,4,5,6]},{id:"t10",room_id:"quarto",name:"Varrer o chão",days:[2,5]},{id:"t11",room_id:"quarto",name:"Trocar lençóis",days:[5]},{id:"t12",room_id:"quarto",name:"Organizar guarda-roupa",days:[6]},{id:"t13",room_id:"banheiro",name:"Limpar vaso sanitário",days:[1,4,6]},{id:"t14",room_id:"banheiro",name:"Esfregar o box",days:[3,6]},{id:"t15",room_id:"banheiro",name:"Limpar pia",days:[1,3,5]},{id:"t16",room_id:"banheiro",name:"Trocar toalhas",days:[3,6]},{id:"t17",room_id:"lavanderia",name:"Lavar roupas",days:[1,4]},{id:"t18",room_id:"lavanderia",name:"Estender roupas",days:[1,4]},{id:"t19",room_id:"lavanderia",name:"Dobrar e guardar",days:[3,6]}];
 
-const SEED_R=[
-  {id:"sala",name:"Sala",icon:"🛋️",color:"#E8C547"},
-  {id:"cozinha",name:"Cozinha",icon:"🍳",color:"#E87A47"},
-  {id:"quarto",name:"Quarto",icon:"🛏️",color:"#7A9BE8"},
-  {id:"banheiro",name:"Banheiro",icon:"🚿",color:"#47C9C9"},
-  {id:"lavanderia",name:"Lavanderia",icon:"🧺",color:"#C97AE8"},
-];
-const SEED_T=[
-  {id:"t1",room_id:"sala",name:"Aspirar o sofá",days:[0,3]},
-  {id:"t2",room_id:"sala",name:"Limpar mesa de centro",days:[1,4]},
-  {id:"t3",room_id:"sala",name:"Varrer o chão",days:[0,2,4]},
-  {id:"t4",room_id:"sala",name:"Passar pano no chão",days:[1,5]},
-  {id:"t5",room_id:"cozinha",name:"Lavar louça",days:[0,1,2,3,4,5,6]},
-  {id:"t6",room_id:"cozinha",name:"Limpar fogão",days:[1,4,6]},
-  {id:"t7",room_id:"cozinha",name:"Passar pano na pia",days:[0,2,4,6]},
-  {id:"t8",room_id:"cozinha",name:"Limpar geladeira",days:[5]},
-  {id:"t9",room_id:"quarto",name:"Fazer a cama",days:[0,1,2,3,4,5,6]},
-  {id:"t10",room_id:"quarto",name:"Varrer o chão",days:[2,5]},
-  {id:"t11",room_id:"quarto",name:"Trocar lençóis",days:[5]},
-  {id:"t12",room_id:"quarto",name:"Organizar guarda-roupa",days:[6]},
-  {id:"t13",room_id:"banheiro",name:"Limpar vaso sanitário",days:[1,4,6]},
-  {id:"t14",room_id:"banheiro",name:"Esfregar o box",days:[3,6]},
-  {id:"t15",room_id:"banheiro",name:"Limpar pia",days:[1,3,5]},
-  {id:"t16",room_id:"banheiro",name:"Trocar toalhas",days:[3,6]},
-  {id:"t17",room_id:"lavanderia",name:"Lavar roupas",days:[1,4]},
-  {id:"t18",room_id:"lavanderia",name:"Estender roupas",days:[1,4]},
-  {id:"t19",room_id:"lavanderia",name:"Dobrar e guardar",days:[3,6]},
-];
-
-// State
 let role=null,rooms=[],tasks=[],smap={};
 let view="day",selDay=TDI,selRoom=null,syncing=false,poll=null;
 let ntask={name:"",roomId:"",days:[]};
@@ -201,77 +230,134 @@ let eroom={id:null,name:"",icon:"🏠",color:PAL[0]},rmode="add",rdel=null;
 
 // Supabase
 async function sb(path,opts={}){
-  const r=await fetch(`${SB_URL}/rest/v1/${path}`,{
-    headers:{apikey:SB_KEY,Authorization:`Bearer ${SB_KEY}`,"Content-Type":"application/json",Prefer:opts.prefer??"return=representation"},
-    ...opts
-  });
-  const t=await r.text();
-  if(!r.ok)throw new Error(t);
-  return t?JSON.parse(t):[];
+  const r=await fetch(`${SB_URL}/rest/v1/${path}`,{headers:{apikey:SB_KEY,Authorization:`Bearer ${SB_KEY}`,"Content-Type":"application/json",Prefer:opts.prefer??"return=representation"},...opts});
+  const t=await r.text();if(!r.ok)throw new Error(t);return t?JSON.parse(t):[];
 }
 async function loadAll(){
-  const[r,t,s]=await Promise.all([
-    sb("rooms?order=created_at"),
-    sb("tasks?order=created_at"),
-    sb(`task_status?date=eq.${TDS}&select=task_id,day_index,completed`)
-  ]);
-  rooms=r;tasks=t;smap={};
-  s.forEach(x=>{smap[`${x.task_id}_${x.day_index}`]=x.completed;});
+  const[r,t,s]=await Promise.all([sb("rooms?order=created_at"),sb("tasks?order=created_at"),sb(`task_status?date=eq.${TDS}&select=task_id,day_index,completed`)]);
+  rooms=r;tasks=t;smap={};s.forEach(x=>{smap[`${x.task_id}_${x.day_index}`]=x.completed;});
 }
 async function seedIfEmpty(){
   const ex=await sb("rooms?select=id");
-  if(!ex.length){
-    await sb("rooms",{method:"POST",prefer:"resolution=ignore",body:JSON.stringify(SEED_R)});
-    await sb("tasks",{method:"POST",prefer:"resolution=ignore",body:JSON.stringify(SEED_T)});
-  }
+  if(!ex.length){await sb("rooms",{method:"POST",prefer:"resolution=ignore",body:JSON.stringify(SEED_R)});await sb("tasks",{method:"POST",prefer:"resolution=ignore",body:JSON.stringify(SEED_T)});}
 }
 
-// Helpers
-function tfd(day){return rooms.flatMap(r=>tasks.filter(t=>t.room_id===r.id&&t.days.includes(day)).map(t=>({...t,rn:r.name,ri:r.icon,rc:r.color})));}
-function rate(day){const ts=tfd(day);if(!ts.length)return 0;return Math.round(ts.filter(t=>smap[`${t.id}_${day}`]).length/ts.length*100);}
+// Modal control — show/hide sem destruir o DOM
+function showModal(id){document.getElementById(id).classList.add("show");}
+function hideModal(id){document.getElementById(id).classList.remove("show");}
+
+function sd(){const el=document.getElementById("sync-dot");if(el)el.style.display=syncing?"inline":"none";}
 function roomById(id){return rooms.find(r=>r.id===id);}
+function tfd(day){return rooms.flatMap(r=>tasks.filter(t=>t.room_id===r.id&&t.days.includes(day)).map(t=>({...t,rc:r.color,ri:r.icon,rn:r.name})));}
+function rate(day){const ts=tfd(day);if(!ts.length)return 0;return Math.round(ts.filter(t=>smap[`${t.id}_${day}`]).length/ts.length*100);}
 
 // Actions
 async function toggleTask(tid,di){
   const k=`${tid}_${di}`,cur=!!smap[k];
-  smap[k]=!cur;ra();
-  syncing=true;sd();
-  try{
-    await sb("task_status",{method:"POST",prefer:"resolution=merge-duplicates",
-      body:JSON.stringify({id:`${tid}_${di}_${TDS}`,task_id:tid,day_index:di,date:TDS,completed:!cur,updated_at:new Date().toISOString()})});
-  }catch(e){smap[k]=cur;ra();}
+  smap[k]=!cur;ra();syncing=true;sd();
+  try{await sb("task_status",{method:"POST",prefer:"resolution=merge-duplicates",body:JSON.stringify({id:`${tid}_${di}_${TDS}`,task_id:tid,day_index:di,date:TDS,completed:!cur,updated_at:new Date().toISOString()})});}
+  catch(e){smap[k]=cur;ra();}
   syncing=false;sd();
 }
 async function addTaskDo(){
-  if(!ntask.name||!ntask.roomId||!ntask.days.length)return;
-  await sb("tasks",{method:"POST",body:JSON.stringify({id:"t"+Date.now(),room_id:ntask.roomId,name:ntask.name,days:ntask.days})});
-  await loadAll();ntask={name:"",roomId:"",days:[]};cm("mat");ra();
+  const name=document.getElementById("nt-name").value.trim();
+  const roomId=document.getElementById("nt-room").value;
+  if(!name||!roomId||!ntask.days.length)return;
+  await sb("tasks",{method:"POST",body:JSON.stringify({id:"t"+Date.now(),room_id:roomId,name,days:ntask.days})});
+  await loadAll();hideModal("mat");ra();
 }
 async function delTask(tid){
-  await sb(`tasks?id=eq.${tid}`,{method:"DELETE",prefer:""});
-  await loadAll();ra();
+  await sb(`tasks?id=eq.${tid}`,{method:"DELETE",prefer:""});await loadAll();ra();
 }
 async function saveRoom(){
-  if(!eroom.name)return;
-  if(rmode==="add"){
-    await sb("rooms",{method:"POST",body:JSON.stringify({id:"room_"+Date.now(),name:eroom.name,icon:eroom.icon,color:eroom.color})});
-  }else{
-    await sb(`rooms?id=eq.${eroom.id}`,{method:"PATCH",body:JSON.stringify({name:eroom.name,icon:eroom.icon,color:eroom.color})});
-  }
-  await loadAll();cm("mr");ra();
+  const name=document.getElementById("rname").value.trim();
+  if(!name)return;
+  eroom.name=name;
+  if(rmode==="add"){await sb("rooms",{method:"POST",body:JSON.stringify({id:"room_"+Date.now(),name:eroom.name,icon:eroom.icon,color:eroom.color})});}
+  else{await sb(`rooms?id=eq.${eroom.id}`,{method:"PATCH",body:JSON.stringify({name:eroom.name,icon:eroom.icon,color:eroom.color})});}
+  await loadAll();hideModal("mr");ra();
 }
 async function delRoomDo(){
   await sb(`rooms?id=eq.${rdel.id}`,{method:"DELETE",prefer:""});
   if(selRoom===rdel.id)selRoom=null;
-  await loadAll();cm("md");rdel=null;ra();
+  await loadAll();hideModal("md");rdel=null;ra();
 }
 
-// Modal
-function om(id){const el=document.getElementById(id);if(el)el.style.display="flex";}
-function cm(id){const el=document.getElementById(id);if(el)el.style.display="none";}
-function sd(){const el=document.getElementById("sync-dot");if(el)el.style.display=syncing?"inline":"none";}
+// Open modals — só atualiza conteúdo, não reconstrói
+function oat(){
+  ntask.days=[];
+  document.getElementById("nt-name").value="";
+  const sel=document.getElementById("nt-room");
+  sel.innerHTML=`<option value="">Selecione o cômodo</option>`+rooms.map(r=>`<option value="${r.id}">${r.icon} ${r.name}</option>`).join("");
+  renderDays();
+  showModal("mat");
+  setTimeout(()=>document.getElementById("nt-name").focus(),100);
+}
+function oatRoom(rid){
+  ntask.days=[];
+  document.getElementById("nt-name").value="";
+  const sel=document.getElementById("nt-room");
+  sel.innerHTML=`<option value="">Selecione o cômodo</option>`+rooms.map(r=>`<option value="${r.id}">${r.icon} ${r.name}</option>`).join("");
+  sel.value=rid;
+  renderDays();
+  showModal("mat");
+  setTimeout(()=>document.getElementById("nt-name").focus(),100);
+}
+function renderDays(){
+  document.getElementById("drow").innerHTML=DAYS.map((d,i)=>`<button class="dt${ntask.days.includes(i)?" active":""}" onclick="tnd(${i})">${d}</button>`).join("");
+}
+function tnd(i){
+  ntask.days=ntask.days.includes(i)?ntask.days.filter(x=>x!==i):[...ntask.days,i];
+  renderDays();
+}
 
-// Render
+function oar(){
+  rmode="add";
+  eroom={id:null,name:"",icon:"🏠",color:PAL[rooms.length%PAL.length]};
+  document.getElementById("mr-title").textContent="Novo Cômodo";
+  document.getElementById("mr-save-btn").textContent="Criar";
+  document.getElementById("rname").value="";
+  renderIconPicker();renderColorPicker();uprev();
+  showModal("mr");
+  setTimeout(()=>document.getElementById("rname").focus(),100);
+}
+function oer(rid){
+  const r=roomById(rid);
+  rmode="edit";eroom={id:r.id,name:r.name,icon:r.icon,color:r.color};
+  document.getElementById("mr-title").textContent="Editar Cômodo";
+  document.getElementById("mr-save-btn").textContent="Salvar";
+  document.getElementById("rname").value=r.name;
+  renderIconPicker();renderColorPicker();uprev();
+  showModal("mr");
+}
+function odr(rid){
+  rdel=roomById(rid);
+  const tc=tasks.filter(t=>t.room_id===rdel.id).length;
+  document.getElementById("del-icon").textContent=rdel.icon;
+  document.getElementById("del-msg").innerHTML=`Tem certeza que deseja excluir <strong style="color:${rdel.color}">${rdel.name}</strong>?${tc>0?` As ${tc} tarefa(s) serão removidas permanentemente.`:""}`;
+  showModal("md");
+}
+function renderIconPicker(){
+  document.getElementById("icon-row").innerHTML=ICONS.map(ic=>`<button class="ib${eroom.icon===ic?" active":""}" style="border-color:${eroom.icon===ic?eroom.color:"#222"};border-width:${eroom.icon===ic?"2px":"1px"}" onclick="sei('${ic}')">${ic}</button>`).join("");
+}
+function renderColorPicker(){
+  document.getElementById("color-row").innerHTML=PAL.map(c=>`<button class="cb${eroom.color===c?" active":""}" style="background:${c}" onclick="sec('${c}')">${eroom.color===c?`<span class="cck">✓</span>`:""}</button>`).join("");
+}
+function sei(ic){
+  eroom.icon=ic;renderIconPicker();uprev();
+}
+function sec(c){
+  eroom.color=c;renderColorPicker();renderIconPicker();uprev();
+}
+function uprev(){
+  const p=document.getElementById("rprev"),nm=document.getElementById("prev-nm"),ic=document.getElementById("prev-ic");
+  if(!p)return;
+  p.style.borderTopColor=eroom.color;p.style.borderLeftColor=eroom.color;
+  nm.style.color=eroom.color;nm.textContent=eroom.name||"Nome do cômodo";
+  ic.textContent=eroom.icon;
+}
+
+// Render app (sem modais)
 function ra(){
   const ia=role==="admin";
   document.getElementById("app-wrap").innerHTML=`
@@ -292,8 +378,7 @@ function ra(){
   <button class="tab${view==="week"?" active":""}" onclick="sv('week')">📊 Semana</button>
 </div>
 <div class="content">${view==="day"?rdv(ia):view==="room"?rrv(ia):rwv()}</div>
-${ia&&view!=="room"?`<button class="fab" onclick="oat()">+</button>`:""}
-${rmat()}${rmr()}${rmd()}`;
+${ia&&view!=="room"?`<button class="fab" onclick="oat()">+</button>`:""}`;
 }
 
 function rdv(ia){
@@ -342,8 +427,7 @@ function rrv(ia){
     </div>`;
   });
   if(ia)h+=`<div class="add-room-tile" onclick="oar()"><div class="ari">+</div><div class="arl">Novo Cômodo</div></div>`;
-  h+=`</div>`;
-  return h;
+  return h+`</div>`;
 }
 
 function rwv(){
@@ -364,105 +448,26 @@ function rwv(){
   return h+`</div>`;
 }
 
-function rmat(){
-  const ro=rooms.map(r=>`<option value="${r.id}"${ntask.roomId===r.id?" selected":""}>${r.icon} ${r.name}</option>`).join("");
-  const db=DAYS.map((d,i)=>`<button class="dt${ntask.days.includes(i)?" active":""}" onclick="tnd(${i})">${d}</button>`).join("");
-  return `<div class="overlay" id="mat"><div class="modal">
-    <div class="modal-body">
-      <div class="mt">Nova Tarefa</div>
-      <input class="mi" id="nt-name" placeholder="Nome da tarefa..." value="${ntask.name}" oninput="ntask.name=this.value"/>
-      <select class="mi" id="nt-room" onchange="ntask.roomId=this.value"><option value="">Selecione o cômodo</option>${ro}</select>
-      <span class="ml">Dias da semana:</span>
-      <div class="days-row" id="drow">${db}</div>
-    </div>
-    <div class="modal-footer"><div class="ma"><button class="can-btn" onclick="cm('mat')">Cancelar</button><button class="ok-btn" onclick="addTaskDo()">Adicionar</button></div></div>
-  </div></div>`;
-}
-
-function rmr(){
-  const ib=ICONS.map(ic=>`<button class="ib${eroom.icon===ic?" active":""}" style="border-color:${eroom.icon===ic?eroom.color:"#222"};border-width:${eroom.icon===ic?"2px":"1px"}" onclick="sei('${ic}')">${ic}</button>`).join("");
-  const cb=PAL.map(c=>`<button class="cb${eroom.color===c?" active":""}" style="background:${c}" onclick="sec('${c}')">${eroom.color===c?`<span class="cck">✓</span>`:""}</button>`).join("");
-  return `<div class="overlay" id="mr"><div class="modal">
-    <div class="modal-body">
-      <div class="mt">${rmode==="add"?"Novo Cômodo":"Editar Cômodo"}</div>
-      <input class="mi" id="rname" placeholder="Nome do cômodo..." value="${eroom.name}" oninput="eroom.name=this.value;uprev()"/>
-      <span class="ml">Ícone:</span><div class="icon-row">${ib}</div>
-      <span class="ml">Cor:</span><div class="color-row">${cb}</div>
-      <span class="ml">Pré-visualização:</span>
-      <div class="rprev" id="rprev" style="border-top-color:${eroom.color};border-left-color:${eroom.color}">
-        <span id="prev-ic" style="font-size:20px">${eroom.icon}</span>
-        <span id="prev-nm" class="rpn" style="color:${eroom.color}">${eroom.name||"Nome do cômodo"}</span>
-      </div>
-    </div>
-    <div class="modal-footer"><div class="ma"><button class="can-btn" onclick="cm('mr')">Cancelar</button><button class="ok-btn" onclick="saveRoom()">${rmode==="add"?"Criar":"Salvar"}</button></div></div>
-  </div></div>`;
-}
-
-function rmd(){
-  if(!rdel)return`<div class="overlay" id="md"></div>`;
-  const tc=tasks.filter(t=>t.room_id===rdel.id).length;
-  return `<div class="overlay" id="md"><div class="modal">
-    <div class="modal-body">
-      <div class="dmi">${rdel.icon}</div>
-      <div class="mt" style="text-align:center">Excluir cômodo?</div>
-      <p class="dw">Tem certeza que deseja excluir <strong style="color:${rdel.color}">${rdel.name}</strong>?${tc>0?` As ${tc} tarefa(s) serão removidas.`:""}</p>
-    </div>
-    <div class="modal-footer"><div class="ma"><button class="can-btn" onclick="cm('md')">Cancelar</button><button class="del-ok-btn" onclick="delRoomDo()">Excluir</button></div></div>
-  </div></div>`;
-}
-
-// UI helpers
 function sv(v){view=v;ra();}
 function sd2(i){selDay=i;ra();}
 function sr(id){selRoom=id;ra();}
-function oat(){ntask={name:"",roomId:"",days:[]};ra();om("mat");}
-function oatRoom(rid){ntask={name:"",roomId:rid,days:[]};ra();om("mat");}
-function tnd(i){
-  ntask.days=ntask.days.includes(i)?ntask.days.filter(x=>x!==i):[...ntask.days,i];
-  const row=document.getElementById("drow");
-  if(row)row.innerHTML=DAYS.map((d,idx)=>`<button class="dt${ntask.days.includes(idx)?" active":""}" onclick="tnd(${idx})">${d}</button>`).join("");
-}
-function oar(){rmode="add";eroom={id:null,name:"",icon:"🏠",color:PAL[rooms.length%PAL.length]};ra();om("mr");}
-function oer(rid){const r=roomById(rid);rmode="edit";eroom={id:r.id,name:r.name,icon:r.icon,color:r.color};ra();om("mr");}
-function odr(rid){rdel=roomById(rid);ra();om("md");}
-function sei(ic){
-  eroom.icon=ic;
-  document.querySelectorAll(".ib").forEach(b=>{const m=b.textContent.trim()===ic;b.classList.toggle("active",m);b.style.borderColor=m?eroom.color:"#222";b.style.borderWidth=m?"2px":"1px";});
-  uprev();
-}
-function sec(c){
-  eroom.color=c;
-  document.querySelectorAll(".cb").forEach(b=>{const m=b.style.background===c||b.style.backgroundColor===c;b.classList.toggle("active",m);b.innerHTML=m?`<span class="cck">✓</span>`:"";});
-  document.querySelectorAll(".ib.active").forEach(b=>b.style.borderColor=c);
-  uprev();
-}
-function uprev(){
-  const p=document.getElementById("rprev"),nm=document.getElementById("prev-nm"),ic=document.getElementById("prev-ic");
-  if(!p)return;
-  p.style.borderTopColor=eroom.color;p.style.borderLeftColor=eroom.color;
-  nm.style.color=eroom.color;nm.textContent=eroom.name||"Nome do cômodo";
-  ic.textContent=eroom.icon;
-}
 
 // Login
 function renderLogin(){
   const w=document.getElementById("login-wrap");
-  w.style.display="flex";w.style.flexDirection="column";w.style.alignItems="center";w.style.justifyContent="center";w.style.minHeight="100vh";w.style.padding="32px 24px";
-  w.innerHTML=`
-    <div class="login-logo">🧹</div>
-    <h1 class="login-title">CasaLimpa</h1>
-    <p class="login-sub">Como você quer entrar?</p>
-    <div class="login-btns" id="lc">
-      <button class="login-btn btn-admin" onclick="gpin()"><span style="font-size:24px">👑</span><span class="login-btn-label">Administrador</span><span class="login-btn-sub">Editar tarefas e cômodos</span></button>
-      <button class="login-btn btn-executor" onclick="dlogin('executor')"><span style="font-size:24px">✅</span><span class="login-btn-label">Executor</span><span class="login-btn-sub">Marcar tarefas concluídas</span></button>
-    </div>
-    <div class="pin-wrap" id="lp">
-      <p class="pin-label">PIN de administrador</p>
-      <input class="pin-input" id="pinf" type="password" inputmode="numeric" maxlength="6" placeholder="••••" onkeydown="if(event.key==='Enter')trypin()"/>
-      <p class="pin-error" id="pe">PIN incorreto</p>
-      <div class="ma" style="margin-top:8px"><button class="can-btn" onclick="bkc()">Voltar</button><button class="ok-btn" onclick="trypin()">Entrar</button></div>
-      <p class="pin-hint">PIN padrão: 1234</p>
-    </div>`;
+  w.style.cssText="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:32px 24px;";
+  w.innerHTML=`<div class="login-logo">🧹</div><h1 class="login-title">CasaLimpa</h1><p class="login-sub">Como você quer entrar?</p>
+  <div class="login-btns" id="lc">
+    <button class="login-btn btn-admin" onclick="gpin()"><span style="font-size:24px">👑</span><span class="login-btn-label">Administrador</span><span class="login-btn-sub">Editar tarefas e cômodos</span></button>
+    <button class="login-btn btn-executor" onclick="dlogin('executor')"><span style="font-size:24px">✅</span><span class="login-btn-label">Executor</span><span class="login-btn-sub">Marcar tarefas concluídas</span></button>
+  </div>
+  <div class="pin-wrap" id="lp">
+    <p class="pin-label">PIN de administrador</p>
+    <input class="pin-input" id="pinf" type="password" inputmode="numeric" maxlength="6" placeholder="••••" onkeydown="if(event.key==='Enter')trypin()"/>
+    <p class="pin-error" id="pe">PIN incorreto</p>
+    <div class="ma" style="margin-top:8px"><button class="can-btn" onclick="bkc()">Voltar</button><button class="ok-btn" onclick="trypin()">Entrar</button></div>
+    <p class="pin-hint">PIN padrão: 1234</p>
+  </div>`;
 }
 function gpin(){document.getElementById("lc").style.display="none";document.getElementById("lp").style.display="block";setTimeout(()=>document.getElementById("pinf").focus(),100);}
 function bkc(){document.getElementById("lp").style.display="none";document.getElementById("lc").style.display="flex";}
@@ -485,7 +490,6 @@ function doLogout(){
   renderLogin();
 }
 
-// Boot
 (async()=>{
   try{await seedIfEmpty();await loadAll();}catch(e){console.error(e);}
   document.getElementById("loading").style.display="none";
