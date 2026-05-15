@@ -59,6 +59,7 @@ h1,h2,h3,.display{font-family:'Playfair Display',serif;}
 .lg-btn-lbl{font-size:15px;font-weight:700;color:var(--text);display:block;}
 .lg-btn-sub{font-size:12px;color:var(--text3);display:block;margin-top:2px;}
 .lg-btn-a{border-color:var(--accent);background:#F0F5F0;}
+.lg-btn-s{border-color:#4A7A8A;background:#EEF4F6;}
 .lg-btn-i{border-color:var(--accent2);background:#FBF3EE;}
 .pin-section{width:100%;max-width:320px;display:none;margin-top:8px;}
 .pin-lbl{color:var(--text2);font-size:13px;margin-bottom:10px;text-align:center;}
@@ -213,24 +214,66 @@ h1,h2,h3,.display{font-family:'Playfair Display',serif;}
 .btn-danger{flex:1;background:#C04030;border:none;border-radius:var(--radius);color:#fff;padding:12px;font-size:13px;font-weight:700;}
 
 
-/* ── SHOPPING ── */
-.shop-add-bar{display:flex;gap:10px;margin-bottom:8px;}
+
+
+/* ══ SHOPPING MODULE CSS ══ */
+.shop-mode-btn{display:flex;align-items:center;gap:16px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:20px;text-align:left;box-shadow:var(--shadow);width:100%;}
+.shop-mode-manage{border-color:var(--accent);background:#F0F5F0;}
+.shop-mode-go{border-color:#4A7A8A;background:#EEF4F6;}
+.shop-mode-icon{font-size:30px;flex-shrink:0;}
+.shop-mode-text{flex:1;}
+.shop-mode-lbl{display:block;font-size:16px;font-weight:700;color:var(--text);}
+.shop-mode-sub{display:block;font-size:12px;color:var(--text3);margin-top:3px;}
+.shop-mode-arrow{font-size:22px;color:var(--text3);}
+.shop-stats-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);}
+.shop-stats-title{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin-bottom:12px;}
+.shop-stats-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border2);}
+.shop-stats-row:last-child{border-bottom:none;}
+.shop-stats-num{font-size:20px;font-weight:700;color:var(--accent);}
+.shop-stats-lbl{font-size:13px;color:var(--text2);}
+
+/* Manage list */
+.shop-add-bar{display:flex;gap:10px;margin-bottom:10px;}
 .shop-inp{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);color:var(--text);padding:12px 14px;font-size:15px;outline:none;}
 .shop-inp:focus{border-color:var(--accent);}
 .shop-add-btn{background:var(--accent);border:none;border-radius:var(--radius);color:#fff;font-size:22px;width:50px;height:50px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.shop-suggest{background:#FFF9F0;border:1px solid #E8C87A;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:14px;display:none;}
+.shop-suggest{background:#FFF9F0;border:1px solid #E8C87A;border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:12px;display:none;}
 .shop-suggest.show{display:block;}
-.shop-suggest-txt{font-size:12px;color:var(--accent3);font-weight:700;margin-bottom:8px;letter-spacing:.3px;text-transform:uppercase;}
-.shop-suggest-items{display:flex;flex-wrap:wrap;gap:6px;}
-.shop-suggest-pill{background:#fff;border:1.5px solid #E8C87A;border-radius:20px;padding:5px 12px;font-size:13px;color:var(--text2);}
-.shop-count{font-size:12px;color:var(--text3);font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;}
-.shop-item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:8px;box-shadow:var(--shadow);cursor:pointer;user-select:none;transition:opacity .3s,transform .3s;}
-.shop-item.buying{opacity:.3;transform:scale(.97);}
-.shop-chk{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.shop-chk.checked{border-color:transparent;background:var(--accent);}
-.shop-name{font-size:14px;flex:1;color:var(--text);}
-.shop-del{background:transparent;border:none;color:var(--text3);font-size:18px;padding:0 2px;line-height:1;}
-.shop-empty{text-align:center;padding:50px 20px;}
+.shop-suggest-lbl{font-size:11px;font-weight:700;color:var(--accent3);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px;}
+.shop-suggest-pills{display:flex;flex-wrap:wrap;gap:6px;}
+.shop-sug-pill{background:#fff;border:1.5px solid #E8C87A;border-radius:20px;padding:5px 12px;font-size:13px;color:var(--text2);}
+
+/* Suggestion section */
+.shop-section-lbl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text3);margin:18px 0 10px;}
+.shop-reorder-card{background:#FFFBF0;border:1px solid #E8D87A;border-radius:var(--radius);padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow);}
+.shop-reorder-icon{font-size:20px;}
+.shop-reorder-text{flex:1;}
+.shop-reorder-name{font-size:14px;font-weight:700;color:var(--text);}
+.shop-reorder-sub{font-size:11px;color:var(--accent3);margin-top:2px;}
+.shop-reorder-btn{background:var(--accent3);border:none;border-radius:var(--radius-sm);color:#fff;font-size:12px;font-weight:700;padding:6px 12px;}
+
+/* Item card */
+.shop-item{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:8px;box-shadow:var(--shadow);}
+.shop-item-text{flex:1;min-width:0;}
+.shop-item-name{font-size:14px;font-weight:700;color:var(--text);}
+.shop-item-freq{font-size:11px;color:var(--text3);margin-top:2px;}
+.shop-edit-btn{background:var(--bg2);border:1px solid var(--border);border-radius:6px;color:var(--text2);font-size:12px;padding:5px 8px;}
+.shop-del-btn{background:transparent;border:none;color:var(--text3);font-size:18px;padding:0 2px;line-height:1;}
+
+/* Session */
+.session-item{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:8px;box-shadow:var(--shadow);cursor:pointer;user-select:none;transition:opacity .3s;}
+.session-item.bought{opacity:.4;}
+.session-chk{width:24px;height:24px;border-radius:6px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;}
+.session-chk.on{border-color:transparent;}
+.session-item-name{font-size:15px;font-weight:700;flex:1;color:var(--text);}
+.session-item.bought .session-item-name{text-decoration:line-through;color:var(--text3);}
+.session-finish-bar{background:var(--bg2);border-top:1px solid var(--border);padding:16px 20px max(24px,env(safe-area-inset-bottom));position:sticky;bottom:0;}
+.session-progress{font-size:13px;color:var(--text2);text-align:center;margin-bottom:10px;}
+
+/* Freq grid */
+.freq-grid{display:flex;gap:8px;flex-wrap:wrap;}
+.freq-btn{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius-sm);color:var(--text2);padding:8px 12px;font-size:13px;font-weight:700;}
+.freq-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;}
 
 /* ── ADD TASK BTN ── */
 .add-task-btn{width:100%;background:var(--bg2);border:1.5px dashed var(--border);border-radius:var(--radius);color:var(--accent);padding:13px;font-size:13px;font-weight:700;margin-top:10px;letter-spacing:.3px;}
@@ -265,7 +308,6 @@ h1,h2,h3,.display{font-family:'Playfair Display',serif;}
     <button class="tab active" id="tab-day" onclick="sv('day')">Por Dia</button>
     <button class="tab" id="tab-room" onclick="sv('room')">Cômodos</button>
     <button class="tab" id="tab-week" onclick="sv('week')">Semana</button>
-    <button class="tab" id="tab-shop" onclick="sv('shop')">🛒 Compras</button>
   </div>
   <div class="scroller" id="main-content"></div>
   <button class="fab" id="fab-btn" onclick="goAddTask()" style="display:none">+</button>
@@ -363,7 +405,7 @@ const TDS=new Date().toISOString().slice(0,10);
 const SEED_R=[{id:"sala",name:"Sala",icon:"🛋️",color:"#5C7A5C"},{id:"cozinha",name:"Cozinha",icon:"🍳",color:"#C4683A"},{id:"quarto",name:"Quarto",icon:"🛏️",color:"#4A7A8A"},{id:"banheiro",name:"Banheiro",icon:"🚿",color:"#3A7A6A"},{id:"lavanderia",name:"Lavanderia",icon:"🧺",color:"#7A5C8A"}];
 const SEED_T=[{id:"t1",room_id:"sala",name:"Aspirar o sofá",days:[0,3]},{id:"t2",room_id:"sala",name:"Limpar mesa de centro",days:[1,4]},{id:"t3",room_id:"sala",name:"Varrer o chão",days:[0,2,4]},{id:"t4",room_id:"sala",name:"Passar pano no chão",days:[1,5]},{id:"t5",room_id:"cozinha",name:"Lavar louça",days:[0,1,2,3,4,5,6]},{id:"t6",room_id:"cozinha",name:"Limpar fogão",days:[1,4,6]},{id:"t7",room_id:"cozinha",name:"Passar pano na pia",days:[0,2,4,6]},{id:"t8",room_id:"cozinha",name:"Limpar geladeira",days:[5]},{id:"t9",room_id:"quarto",name:"Fazer a cama",days:[0,1,2,3,4,5,6]},{id:"t10",room_id:"quarto",name:"Varrer o chão",days:[2,5]},{id:"t11",room_id:"quarto",name:"Trocar lençóis",days:[5]},{id:"t12",room_id:"quarto",name:"Organizar guarda-roupa",days:[6]},{id:"t13",room_id:"banheiro",name:"Limpar vaso sanitário",days:[1,4,6]},{id:"t14",room_id:"banheiro",name:"Esfregar o box",days:[3,6]},{id:"t15",room_id:"banheiro",name:"Limpar pia",days:[1,3,5]},{id:"t16",room_id:"banheiro",name:"Trocar toalhas",days:[3,6]},{id:"t17",room_id:"lavanderia",name:"Lavar roupas",days:[1,4]},{id:"t18",room_id:"lavanderia",name:"Estender roupas",days:[1,4]},{id:"t19",room_id:"lavanderia",name:"Dobrar e guardar",days:[3,6]}];
 
-let role=null,rooms=[],tasks=[],smap={},shopping=[];
+let role=null,rooms=[],tasks=[],smap={};
 let view="day",selDay=TDI,selRoom=null,syncing=false,poll=null;
 let taskFormMode="add",taskFormData={id:null,name:"",roomId:"",days:[]};
 let roomFormMode="add",roomFormData={id:null,name:"",icon:"🏠",color:PAL[0]};
@@ -374,8 +416,8 @@ async function sb(path,opts={}){
   const t=await r.text();if(!r.ok)throw new Error(t);return t?JSON.parse(t):[];
 }
 async function loadAll(){
-  const[r,t,s,sh]=await Promise.all([sb("rooms?order=created_at"),sb("tasks?order=created_at"),sb(`task_status?date=eq.${TDS}&select=task_id,day_index,completed`),sb("shopping?order=created_at")]);
-  rooms=r;tasks=t;smap={};shopping=sh;
+  const[r,t,s]=await Promise.all([sb("rooms?order=created_at"),sb("tasks?order=created_at"),sb(`task_status?date=eq.${TDS}&select=task_id,day_index,completed`)]);
+  rooms=r;tasks=t;smap={};
   s.forEach(x=>{smap[`${x.task_id}_${x.day_index}`]=x.completed;});
 }
 async function seedIfEmpty(){
@@ -534,8 +576,8 @@ function renderRoomDetail(){
 
 function sv(v){
   view=v;
-  ["day","room","week","shop"].forEach(x=>document.getElementById(`tab-${x}`).classList.toggle("active",x===v));
-  document.getElementById("fab-btn").style.display=(role==="admin"&&v!=="room"&&v!=="shop")?"flex":"none";
+  ["day","room","week"].forEach(x=>document.getElementById(`tab-${x}`).classList.toggle("active",x===v));
+  document.getElementById("fab-btn").style.display=(role==="admin"&&v!=="room")?"flex":"none";
   renderMain();
 }
 function renderMain(){
@@ -543,8 +585,7 @@ function renderMain(){
   const c=document.getElementById("main-content");
   if(view==="day")c.innerHTML=renderDay(ia);
   else if(view==="room")c.innerHTML=renderRooms(ia);
-  else if(view==="week")c.innerHTML=renderWeek();
-  else c.innerHTML=renderShop();
+  else c.innerHTML=renderWeek();
 }
 function sd2(i){selDay=i;renderMain();}
 
@@ -602,8 +643,24 @@ function renderWeek(){
   return h+`</div>`;
 }
 
-// ── Shopping helpers ──
-function norm(s){return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/\s+/g," ").trim();}
+
+
+// ══════════════════════════════════════════
+// SHOPPING MODULE
+// ══════════════════════════════════════════
+let shopItems = [];
+let shopSession = {}; // {itemId: bought}
+let shopItemFormMode = "add";
+let shopItemFormData = {id:null, name:"", frequency_days:null};
+const FREQ_PRESETS = [{label:"Semanal", days:7},{label:"Quinzenal", days:15},{label:"Mensal", days:30},{label:"Bimestral", days:60}];
+
+async function loadShop(){
+  shopItems = await sb("shopping?order=created_at");
+}
+
+function norm(s){
+  return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/\s+/g," ").trim();
+}
 function similar(a,b){
   const na=norm(a),nb=norm(b);
   if(na===nb)return true;
@@ -614,84 +671,251 @@ function similar(a,b){
   let m=0;for(let i=0;i<shorter.length;i++){if(longer.includes(shorter[i]))m++;}
   return m/shorter.length>=0.75;
 }
-function findSimilar(val){
-  if(!val||val.length<2)return[];
-  return shopping.filter(i=>similar(val,i.name));
+
+async function goShopping(){
+  await loadShop();
+  loadShopStats();
+  const b=document.getElementById("shop-today-badge");
+  if(b)b.innerHTML=DAYS_FULL[TDI]+", "+TDD;
+  document.getElementById("login-screen").style.display="none";
+  showScreen("screen-shop-home");
 }
 
-function renderShop(){
-  const count=shopping.length;
-  let h=`<div class="shop-add-bar">
-    <input class="shop-inp" id="shop-inp" placeholder="Adicionar item…" oninput="onShopInput(this.value)" onkeydown="if(event.key==='Enter')addShopItem()"/>
-    <button class="shop-add-btn" onclick="addShopItem()">+</button>
-  </div>
-  <div class="shop-suggest" id="shop-suggest">
-    <div class="shop-suggest-txt">⚠️ Item parecido já existe</div>
-    <div class="shop-suggest-items" id="shop-suggest-items"></div>
-  </div>`;
-  if(!count){
-    h+=`<div class="shop-empty"><div class="empty-ic">🛒</div><p class="empty-tx">Lista vazia!<br>Adicione o primeiro item.</p></div>`;
-  } else {
-    h+=`<div class="shop-count">${count} ${count===1?"item":"itens"} na lista</div>`;
-    shopping.forEach(item=>{
-      h+=`<div class="shop-item" id="si-${item.id}" onclick="buyItem('${item.id}')">
-        <div class="shop-chk" id="sc-${item.id}"></div>
-        <span class="shop-name">${item.name}</span>
-        <button class="shop-del" onclick="event.stopPropagation();delShopItem('${item.id}')">×</button>
+function leaveShop(){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  renderLogin();
+}
+
+function loadShopStats(){
+  const pending=shopItems.filter(i=>i.pending).length;
+  const suggestions=getReorderSuggestions().length;
+  const el=document.getElementById("shop-stats");
+  if(!el)return;
+  el.innerHTML=`
+    <div class="shop-stats-title">Resumo</div>
+    <div class="shop-stats-row"><span class="shop-stats-lbl">Itens na lista</span><span class="shop-stats-num">${pending}</span></div>
+    <div class="shop-stats-row"><span class="shop-stats-lbl">Sugestões de recompra</span><span class="shop-stats-num" style="color:var(--accent3)">${suggestions}</span></div>
+    <div class="shop-stats-row"><span class="shop-stats-lbl">Total de produtos</span><span class="shop-stats-num" style="color:var(--text2)">${shopItems.length}</span></div>
+  `;
+}
+
+function getReorderSuggestions(){
+  const today=new Date();today.setHours(0,0,0,0);
+  return shopItems.filter(i=>{
+    if(i.pending)return false; // already on list
+    if(!i.frequency_days||!i.last_bought)return false;
+    const last=new Date(i.last_bought);last.setHours(0,0,0,0);
+    const nextBuy=new Date(last.getTime()+i.frequency_days*864e5);
+    const daysLeft=Math.ceil((nextBuy-today)/864e5);
+    return daysLeft<=3; // suggest up to 3 days before
+  });
+}
+
+// ── MANAGE ──
+async function showShopManage(){
+  await loadShop();
+  renderShopManage();
+  showScreen("screen-shop-manage");
+}
+
+function renderShopManage(){
+  const pending=shopItems.filter(i=>i.pending);
+  const suggestions=getReorderSuggestions();
+  let h=`
+    <div class="shop-add-bar">
+      <input class="shop-inp" id="shop-inp" placeholder="Adicionar item…" oninput="onShopInput(this.value)" onkeydown="if(event.key==='Enter')quickAddShopItem()"/>
+      <button class="shop-add-btn" onclick="quickAddShopItem()">+</button>
+    </div>
+    <div class="shop-suggest" id="shop-suggest">
+      <div class="shop-suggest-lbl">⚠️ Item parecido já existe</div>
+      <div class="shop-suggest-pills" id="shop-suggest-pills"></div>
+    </div>`;
+
+  if(suggestions.length){
+    h+=`<div class="shop-section-lbl">🔔 Hora de recomprar</div>`;
+    suggestions.forEach(item=>{
+      const last=new Date(item.last_bought);
+      const nextBuy=new Date(last.getTime()+item.frequency_days*864e5);
+      const today=new Date();today.setHours(0,0,0,0);
+      const daysLeft=Math.ceil((nextBuy-today)/864e5);
+      const txt=daysLeft<=0?"Acabou hoje!":daysLeft===1?"Acaba amanhã":`Acaba em ${daysLeft} dias`;
+      h+=`<div class="shop-reorder-card">
+        <span class="shop-reorder-icon">⏰</span>
+        <div class="shop-reorder-text">
+          <div class="shop-reorder-name">${item.name}</div>
+          <div class="shop-reorder-sub">${txt}</div>
+        </div>
+        <button class="shop-reorder-btn" onclick="addToList('${item.id}')">+ Lista</button>
       </div>`;
     });
   }
-  return h;
+
+  if(pending.length){
+    h+=`<div class="shop-section-lbl">Lista de Compras</div>`;
+    pending.forEach(item=>{
+      const freqTxt=item.frequency_days?FREQ_PRESETS.find(f=>f.days===item.frequency_days)?.label||`${item.frequency_days} dias`:"";
+      h+=`<div class="shop-item">
+        <div class="shop-item-text">
+          <div class="shop-item-name">${item.name}</div>
+          ${freqTxt?`<div class="shop-item-freq">↻ ${freqTxt}</div>`:""}
+        </div>
+        <button class="shop-edit-btn" onclick="openShopItemForm('${item.id}')">✏️</button>
+        <button class="shop-del-btn" onclick="delShopItem('${item.id}')">×</button>
+      </div>`;
+    });
+  }
+
+  if(!pending.length&&!suggestions.length){
+    h+=`<div class="empty"><div class="empty-ic">🛒</div><p class="empty-tx">Lista vazia!<br>Adicione o primeiro item acima.</p></div>`;
+  }
+
+  document.getElementById("shop-manage-content").innerHTML=h;
 }
 
 function onShopInput(val){
   const sug=document.getElementById("shop-suggest");
-  const items=document.getElementById("shop-suggest-items");
-  if(!sug||!items)return;
-  const matches=findSimilar(val);
-  if(matches.length){
-    items.innerHTML=matches.map(m=>`<span class="shop-suggest-pill">${m.name}</span>`).join("");
+  const pills=document.getElementById("shop-suggest-pills");
+  if(!sug||!pills)return;
+  const matches=shopItems.filter(i=>similar(val,i.name));
+  if(val.length>=2&&matches.length){
+    pills.innerHTML=matches.map(m=>`<span class="shop-sug-pill">${m.name}</span>`).join("");
     sug.classList.add("show");
   } else {
     sug.classList.remove("show");
   }
 }
 
-async function addShopItem(){
+async function quickAddShopItem(){
   const inp=document.getElementById("shop-inp");
   if(!inp)return;
   const val=inp.value.trim();
   if(!val)return;
-  if(shopping.some(i=>norm(i.name)===norm(val))){
+  if(shopItems.some(i=>norm(i.name)===norm(val))){
     inp.style.borderColor="var(--accent2)";
     setTimeout(()=>{inp.style.borderColor="";},1200);
     return;
   }
   inp.value="";
-  const sug=document.getElementById("shop-suggest");
-  if(sug)sug.classList.remove("show");
-  await sb("shopping",{method:"POST",body:JSON.stringify({id:"s"+Date.now(),name:val})});
-  await loadAll();renderMain();
-  setTimeout(()=>{const i=document.getElementById("shop-inp");if(i)i.focus();},100);
+  document.getElementById("shop-suggest")?.classList.remove("show");
+  await sb("shopping",{method:"POST",body:JSON.stringify({id:"s"+Date.now(),name:val,pending:true})});
+  await loadShop();
+  renderShopManage();
+  setTimeout(()=>document.getElementById("shop-inp")?.focus(),100);
 }
 
-async function buyItem(sid){
-  const el=document.getElementById("si-"+sid);
-  const chk=document.getElementById("sc-"+sid);
-  if(!el)return;
-  el.classList.add("buying");
-  if(chk){chk.classList.add("checked");chk.innerHTML='<span style="color:#fff;font-size:11px;font-weight:700">✓</span>';}
-  setTimeout(async()=>{
-    await sb("shopping?id=eq."+sid,{method:"DELETE",prefer:""});
-    await loadAll();renderMain();
-  },500);
+async function addToList(id){
+  await sb("shopping?id=eq."+id,{method:"PATCH",body:JSON.stringify({pending:true})});
+  await loadShop();renderShopManage();loadShopStats();
 }
 
-async function delShopItem(sid){
-  await sb("shopping?id=eq."+sid,{method:"DELETE",prefer:""});
-  await loadAll();renderMain();
+async function delShopItem(id){
+  if(!confirm("Remover este item?"))return;
+  await sb("shopping?id=eq."+id,{method:"DELETE",prefer:""});
+  await loadShop();renderShopManage();loadShopStats();
 }
 
+// ── ITEM FORM ──
+function openShopItemForm(id){
+  if(id){
+    const item=shopItems.find(i=>i.id===id);
+    shopItemFormMode="edit";
+    shopItemFormData={id:item.id,name:item.name,frequency_days:item.frequency_days};
+    document.getElementById("shop-item-form-title").textContent="Editar Item";
+  } else {
+    shopItemFormMode="add";
+    shopItemFormData={id:null,name:"",frequency_days:null};
+    document.getElementById("shop-item-form-title").textContent="Novo Item";
+  }
+  document.getElementById("sif-name").value=shopItemFormData.name||"";
+  document.getElementById("sif-freq").value=shopItemFormData.frequency_days||"";
+  renderFreqGrid();
+  showScreen("screen-shop-item-form");
+  setTimeout(()=>document.getElementById("sif-name").focus(),200);
+}
+
+function renderFreqGrid(){
+  document.getElementById("freq-grid").innerHTML=FREQ_PRESETS.map(f=>
+    `<button class="freq-btn${shopItemFormData.frequency_days===f.days?" on":""}" onclick="pickFreq(${f.days})">${f.label}</button>`
+  ).join("");
+}
+function pickFreq(days){
+  shopItemFormData.frequency_days=days;
+  document.getElementById("sif-freq").value=days;
+  renderFreqGrid();
+}
+
+async function saveShopItem(){
+  const name=document.getElementById("sif-name").value.trim();
+  const freqVal=document.getElementById("sif-freq").value;
+  const freq=freqVal?parseInt(freqVal):null;
+  if(!name){alert("Digite o nome do item.");return;}
+  if(shopItemFormMode==="add"){
+    await sb("shopping",{method:"POST",body:JSON.stringify({id:"s"+Date.now(),name,frequency_days:freq,pending:true})});
+  } else {
+    await sb("shopping?id=eq."+shopItemFormData.id,{method:"PATCH",body:JSON.stringify({name,frequency_days:freq})});
+  }
+  await loadShop();
+  showScreen("screen-shop-manage");
+  renderShopManage();
+}
+
+// ── SESSION (ir às compras) ──
+function startShopping(){
+  const pending=shopItems.filter(i=>i.pending);
+  if(!pending.length){alert("A lista está vazia! Adicione itens primeiro.");return;}
+  shopSession={};
+  pending.forEach(i=>{shopSession[i.id]=false;});
+  renderShopSession();
+  showScreen("screen-shop-session");
+}
+
+function renderShopSession(){
+  const pending=shopItems.filter(i=>i.pending);
+  const bought=Object.values(shopSession).filter(Boolean).length;
+  const total=pending.length;
+  let h=`<div style="margin-bottom:16px;padding:12px 16px;background:var(--card);border-radius:var(--radius);border:1px solid var(--border);text-align:center;box-shadow:var(--shadow);">
+    <div style="font-size:13px;color:var(--text3);margin-bottom:4px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;">Progresso</div>
+    <div style="font-size:28px;font-weight:700;color:var(--accent);font-family:'Playfair Display',serif;">${bought}<span style="font-size:16px;color:var(--text3)"> / ${total}</span></div>
+    <div style="height:4px;background:var(--bg3);border-radius:2px;margin-top:10px;overflow:hidden;">
+      <div style="height:100%;background:var(--accent);border-radius:2px;width:${total?Math.round(bought/total*100):0}%;transition:width .4s"></div>
+    </div>
+  </div>`;
+  pending.forEach(item=>{
+    const bought=!!shopSession[item.id];
+    h+=`<div class="session-item${bought?" bought":""}" onclick="toggleSessionItem('${item.id}')">
+      <div class="session-chk${bought?" on":""}" style="${bought?`background:var(--accent)`:""}">
+        ${bought?`<span style="color:#fff;font-size:12px;font-weight:700">✓</span>`:""}
+      </div>
+      <span class="session-item-name">${item.name}</span>
+    </div>`;
+  });
+  document.getElementById("shop-session-content").innerHTML=h;
+}
+
+function toggleSessionItem(id){
+  shopSession[id]=!shopSession[id];
+  renderShopSession();
+}
+
+async function finishShopping(){
+  const today=new Date().toISOString().slice(0,10);
+  const updates=[];
+  shopItems.filter(i=>i.pending).forEach(item=>{
+    if(shopSession[item.id]){
+      // bought: remove from pending, record last_bought
+      updates.push(sb("shopping?id=eq."+item.id,{method:"PATCH",body:JSON.stringify({pending:false,last_bought:today})}));
+    }
+    // not bought: stays pending
+  });
+  await Promise.all(updates);
+  await loadShop();
+  loadShopStats();
+  showScreen("screen-shop-home");
+}
+
+function cancelShopping(){
+  showScreen("screen-shop-home");
+}
 
 function renderLogin(){
   const w=document.getElementById("login-screen");
@@ -706,6 +930,10 @@ function renderLogin(){
     <button class="lg-btn lg-btn-i" onclick="dlogin('iniciar')">
       <span class="lg-btn-icon">▶️</span>
       <div class="lg-btn-text"><span class="lg-btn-lbl">Iniciar</span><span class="lg-btn-sub">Ver e marcar tarefas do dia</span></div>
+    </button>
+    <button class="lg-btn lg-btn-s" onclick="goShopping()">
+      <span class="lg-btn-icon">🛒</span>
+      <div class="lg-btn-text"><span class="lg-btn-lbl">Compras</span><span class="lg-btn-sub">Gerenciar e fazer compras</span></div>
     </button>
     <button class="lg-btn lg-btn-a" onclick="gpin()">
       <span class="lg-btn-icon">⚙️</span>
@@ -753,5 +981,79 @@ function doLogout(){
   renderLogin();
 })();
 </script>
+
+<!-- ═══════════════════════════════════════════
+     SHOPPING MODULE — screens isolated from main app
+     ═══════════════════════════════════════════ -->
+
+<!-- SHOPPING HOME -->
+<div class="screen" id="screen-shop-home">
+  <div class="topbar">
+    <div class="tb-brand"><div class="tb-logo">🛒</div><div class="tb-name">Compras</div></div>
+    <div class="tb-right">
+      <div class="today-badge" id="shop-today-badge"></div>
+      <div class="tb-meta"><button class="logout-btn" onclick="leaveShop()">← Voltar</button></div>
+    </div>
+  </div>
+  <div class="scroller" style="display:flex;flex-direction:column;gap:14px;padding-top:28px;">
+    <button class="shop-mode-btn shop-mode-manage" onclick="showShopManage()">
+      <span class="shop-mode-icon">✏️</span>
+      <div class="shop-mode-text">
+        <span class="shop-mode-lbl">Gerenciar Lista</span>
+        <span class="shop-mode-sub">Adicionar, editar e organizar itens</span>
+      </div>
+      <span class="shop-mode-arrow">›</span>
+    </button>
+    <button class="shop-mode-btn shop-mode-go" onclick="startShopping()">
+      <span class="shop-mode-icon">🏪</span>
+      <div class="shop-mode-text">
+        <span class="shop-mode-lbl">Ir às Compras</span>
+        <span class="shop-mode-sub">Marcar itens no mercado</span>
+      </div>
+      <span class="shop-mode-arrow">›</span>
+    </button>
+    <div class="shop-stats-card" id="shop-stats"></div>
+  </div>
+</div>
+
+<!-- SHOPPING MANAGE -->
+<div class="screen" id="screen-shop-manage">
+  <div class="form-topbar">
+    <button class="form-back" onclick="showScreen('screen-shop-home');loadShopStats()">←</button>
+    <span class="form-title">Gerenciar Lista</span>
+  </div>
+  <div class="scroller" id="shop-manage-content"></div>
+</div>
+
+<!-- ADD/EDIT ITEM FORM -->
+<div class="screen" id="screen-shop-item-form">
+  <div class="form-topbar">
+    <button class="form-back" onclick="showScreen('screen-shop-manage');renderShopManage()">←</button>
+    <span class="form-title" id="shop-item-form-title">Novo Item</span>
+    <button class="save-btn" onclick="saveShopItem()">Salvar</button>
+  </div>
+  <div class="form-scroller">
+    <div class="form-group">
+      <label class="form-lbl">Nome do item</label>
+      <input class="form-inp" id="sif-name" placeholder="Ex: Arroz 5kg"/>
+    </div>
+    <div class="form-group">
+      <label class="form-lbl">Recompra <span style="color:var(--text3);font-weight:400;text-transform:none;letter-spacing:0">(a cada quantos dias?)</span></label>
+      <div class="freq-grid" id="freq-grid"></div>
+      <input class="form-inp" id="sif-freq" type="number" min="1" max="365" placeholder="Ou digite o número de dias…" style="margin-top:10px"/>
+    </div>
+  </div>
+</div>
+
+<!-- SHOPPING SESSION (ir às compras) -->
+<div class="screen" id="screen-shop-session">
+  <div class="form-topbar">
+    <button class="form-back" onclick="cancelShopping()">←</button>
+    <span class="form-title">Ir às Compras</span>
+    <button class="save-btn" style="background:var(--accent2)" onclick="finishShopping()">Finalizar</button>
+  </div>
+  <div class="scroller" id="shop-session-content"></div>
+</div>
+
 </body>
 </html>
