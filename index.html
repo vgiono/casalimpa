@@ -602,6 +602,97 @@ function renderWeek(){
   return h+`</div>`;
 }
 
+// ── Shopping helpers ──
+function norm(s){return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/\s+/g," ").trim();}
+function similar(a,b){
+  const na=norm(a),nb=norm(b);
+  if(na===nb)return true;
+  if(na.includes(nb)||nb.includes(na))return true;
+  const shorter=na.length<=nb.length?na:nb;
+  const longer=na.length>nb.length?na:nb;
+  if(shorter.length<3)return false;
+  let m=0;for(let i=0;i<shorter.length;i++){if(longer.includes(shorter[i]))m++;}
+  return m/shorter.length>=0.75;
+}
+function findSimilar(val){
+  if(!val||val.length<2)return[];
+  return shopping.filter(i=>similar(val,i.name));
+}
+
+function renderShop(){
+  const count=shopping.length;
+  let h=`<div class="shop-add-bar">
+    <input class="shop-inp" id="shop-inp" placeholder="Adicionar item…" oninput="onShopInput(this.value)" onkeydown="if(event.key==='Enter')addShopItem()"/>
+    <button class="shop-add-btn" onclick="addShopItem()">+</button>
+  </div>
+  <div class="shop-suggest" id="shop-suggest">
+    <div class="shop-suggest-txt">⚠️ Item parecido já existe</div>
+    <div class="shop-suggest-items" id="shop-suggest-items"></div>
+  </div>`;
+  if(!count){
+    h+=`<div class="shop-empty"><div class="empty-ic">🛒</div><p class="empty-tx">Lista vazia!<br>Adicione o primeiro item.</p></div>`;
+  } else {
+    h+=`<div class="shop-count">${count} ${count===1?"item":"itens"} na lista</div>`;
+    shopping.forEach(item=>{
+      h+=`<div class="shop-item" id="si-${item.id}" onclick="buyItem('${item.id}')">
+        <div class="shop-chk" id="sc-${item.id}"></div>
+        <span class="shop-name">${item.name}</span>
+        <button class="shop-del" onclick="event.stopPropagation();delShopItem('${item.id}')">×</button>
+      </div>`;
+    });
+  }
+  return h;
+}
+
+function onShopInput(val){
+  const sug=document.getElementById("shop-suggest");
+  const items=document.getElementById("shop-suggest-items");
+  if(!sug||!items)return;
+  const matches=findSimilar(val);
+  if(matches.length){
+    items.innerHTML=matches.map(m=>`<span class="shop-suggest-pill">${m.name}</span>`).join("");
+    sug.classList.add("show");
+  } else {
+    sug.classList.remove("show");
+  }
+}
+
+async function addShopItem(){
+  const inp=document.getElementById("shop-inp");
+  if(!inp)return;
+  const val=inp.value.trim();
+  if(!val)return;
+  if(shopping.some(i=>norm(i.name)===norm(val))){
+    inp.style.borderColor="var(--accent2)";
+    setTimeout(()=>{inp.style.borderColor="";},1200);
+    return;
+  }
+  inp.value="";
+  const sug=document.getElementById("shop-suggest");
+  if(sug)sug.classList.remove("show");
+  await sb("shopping",{method:"POST",body:JSON.stringify({id:"s"+Date.now(),name:val})});
+  await loadAll();renderMain();
+  setTimeout(()=>{const i=document.getElementById("shop-inp");if(i)i.focus();},100);
+}
+
+async function buyItem(sid){
+  const el=document.getElementById("si-"+sid);
+  const chk=document.getElementById("sc-"+sid);
+  if(!el)return;
+  el.classList.add("buying");
+  if(chk){chk.classList.add("checked");chk.innerHTML='<span style="color:#fff;font-size:11px;font-weight:700">✓</span>';}
+  setTimeout(async()=>{
+    await sb("shopping?id=eq."+sid,{method:"DELETE",prefer:""});
+    await loadAll();renderMain();
+  },500);
+}
+
+async function delShopItem(sid){
+  await sb("shopping?id=eq."+sid,{method:"DELETE",prefer:""});
+  await loadAll();renderMain();
+}
+
+
 function renderLogin(){
   const w=document.getElementById("login-screen");
   w.style.cssText="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:40px 28px;background:var(--bg);position:relative;z-index:1;";
