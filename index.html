@@ -779,31 +779,12 @@ function onShopInput(val){
   if(val.length<2){sug.classList.remove("show");return;}
   const matches=shopItems.filter(i=>similar(val,i.name));
   if(matches.length){
-    const exact=matches.some(i=>norm(i.name)===norm(val));
     const nomes=matches.map(m=>`<strong>${m.name}</strong>`).join(", ");
-    pills.innerHTML=`
-      <div style="font-size:13px;color:var(--text2);margin-bottom:10px;">
-        ${exact?"Já existe:":"Parecido com:"} ${nomes}
-      </div>
-      ${!exact?`<button class="shop-reorder-btn" style="width:100%;padding:10px;font-size:13px;" onclick="forceAddShopItem()">+ Adicionar mesmo assim</button>`:""}
-    `;
+    pills.innerHTML=`<div style="font-size:13px;color:var(--text2);">Parecido com: ${nomes} — pressione + para adicionar mesmo assim</div>`;
     sug.classList.add("show");
   } else {
     sug.classList.remove("show");
   }
-}
-
-async function forceAddShopItem(){
-  const inp=document.getElementById("shop-inp");
-  if(!inp)return;
-  const val=inp.value.trim();
-  if(!val)return;
-  inp.value="";
-  document.getElementById("shop-suggest")?.classList.remove("show");
-  await sb("shopping",{method:"POST",body:JSON.stringify({id:"s"+Date.now(),name:val,pending:true})});
-  await loadShop();
-  renderShopManage();
-  setTimeout(()=>document.getElementById("shop-inp")?.focus(),100);
 }
 
 async function quickAddShopItem(){
@@ -811,20 +792,6 @@ async function quickAddShopItem(){
   if(!inp)return;
   const val=inp.value.trim();
   if(!val)return;
-  // Bloqueia apenas se for EXATAMENTE igual
-  const exact=shopItems.find(i=>norm(i.name)===norm(val));
-  if(exact){
-    inp.style.borderColor="var(--accent2)";
-    setTimeout(()=>{inp.style.borderColor="";},1200);
-    // Mostra aviso mas não bloqueia mais — só exato bloqueia
-    const sug=document.getElementById("shop-suggest");
-    const pills=document.getElementById("shop-suggest-pills");
-    if(sug&&pills){
-      pills.innerHTML=`<span class="shop-sug-pill">${exact.name} já está na lista</span>`;
-      sug.classList.add("show");
-    }
-    return;
-  }
   inp.value="";
   document.getElementById("shop-suggest")?.classList.remove("show");
   await sb("shopping",{method:"POST",body:JSON.stringify({id:"s"+Date.now(),name:val,pending:true})});
